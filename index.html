@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>PetVerse — Shop, care & celebrate every paw</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #20271f;
+            --muted: #70796c;
+            --cream: #f7f7f0;
+            --lime: #d8f27a;
+            --sage: #e8eddb;
+            --line: #e7e9df;
+            --orange: #ee946d
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button,
+        input,
+        select {
+            font: inherit
+        }
+
+        .announcement {
+            background: #20271f;
+            color: #f6f6eb;
+            text-align: center;
+            padding: 10px;
+            font-size: 10px;
+            letter-spacing: .14em;
+            text-transform: uppercase
+        }
+
+        .nav {
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: #f7f7f0eF;
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid #20271f0c
+        }
+
+        .logo {
+            font: 800 25px Manrope;
+            letter-spacing: -1.5px
+        }
+
+        .logo span {
+            color: #8aa83e
+        }
+
+        .links {
+            display: flex;
+            gap: 28px;
+            font-size: 12px;
+            color: #5e675a
+        }
+
+        .links a:hover {
+            color: #86a33d
+        }
+
+        .navright {
+            display: flex;
+            gap: 15px;
+            align-items: center
+        }
+
+        .cartbtn {
+            border: 0;
+            background: none;
+            font-size: 20px;
+            cursor: pointer;
+            position: relative
+        }
+
+        .count {
+            position: absolute;
+            top: -7px;
+            right: -9px;
+            background: var(--lime);
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            font-size: 10px;
+            display: grid;
+            place-items: center;
+            font-weight: 800
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: var(--ink);
+            color: #fff;
+            padding: 14px 21px;
+            border-radius: 100px;
+            border: 0;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .25s
+        }
+
+        .btn:hover {
+            background: #4a5740;
+            transform: translateY(-2px)
+        }
+
+        .btn.light {
+            background: white;
+            color: var(--ink);
+            border: 1px solid var(--line)
+        }
+
+        .btn.lime {
+            background: var(--lime);
+            color: var(--ink)
+        }
+
+        .hero {
+            padding: 54px 7% 70px;
+            display: grid;
+            grid-template-columns: .9fr 1.1fr;
+            align-items: center;
+            min-height: 620px;
+            gap: 25px;
+            overflow: hidden
+        }
+
+        .kicker {
+            font-size: 10px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #829b43;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .kicker:before {
+            content: "";
+            height: 1px;
+            width: 26px;
+            background: #8da64b
+        }
+
+        .hero h1 {
+            font: 800 clamp(52px, 6.4vw, 86px)/.98 Manrope;
+            letter-spacing: -5px;
+            margin: 22px 0
+        }
+
+        .hero h1 em {
+            color: #89a83e;
+            font-style: normal
+        }
+
+        .hero p {
+            max-width: 430px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.9
+        }
+
+        .actions {
+            display: flex;
+            gap: 11px;
+            flex-wrap: wrap;
+            margin-top: 28px
+        }
+
+        .hero-meta {
+            margin-top: 35px;
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .hero-meta b {
+            color: var(--ink)
+        }
+
+        .scene-wrap {
+            height: 510px;
+            position: relative;
+            perspective: 1000px;
+            display: grid;
+            place-items: center
+        }
+
+        .orb {
+            position: absolute;
+            width: min(94%, 500px);
+            aspect-ratio: 1;
+            border-radius: 46% 54% 55% 45%;
+            background: radial-gradient(circle at 35% 25%, #f8fbdc, #dceba8 48%, #a9c45f);
+            box-shadow: inset -25px -28px 60px #8ca94b33, 0 35px 80px #697b3a20;
+            transform: rotate(-10deg)
+        }
+
+        #pet3d {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: grab
+        }
+
+        #pet3d:active {
+            cursor: grabbing
+        }
+
+        .float {
+            position: absolute;
+            z-index: 4;
+            background: #fff;
+            border: 1px solid #ffffffaa;
+            border-radius: 16px;
+            padding: 13px 16px;
+            box-shadow: 0 15px 35px #33401e1a;
+            font-size: 10px
+        }
+
+        .float b {
+            display: block;
+            font: 800 13px Manrope;
+            margin-top: 4px
+        }
+
+        .f1 {
+            left: 0;
+            top: 18%
+        }
+
+        .f2 {
+            right: 0;
+            bottom: 17%
+        }
+
+        .star {
+            position: absolute;
+            z-index: 4;
+            color: #fff;
+            font-size: 25px
+        }
+
+        .st1 {
+            right: 18%;
+            top: 10%
+        }
+
+        .st2 {
+            left: 13%;
+            bottom: 12%
+        }
+
+        .marquee {
+            background: var(--lime);
+            padding: 15px;
+            text-align: center;
+            font: 800 11px Manrope;
+            letter-spacing: .16em
+        }
+
+        .marquee span {
+            padding: 0 22px
+        }
+
+        .section {
+            padding: 88px 7%
+        }
+
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            margin-bottom: 32px
+        }
+
+        .head h2 {
+            font: 800 clamp(32px, 4vw, 48px)/1.05 Manrope;
+            letter-spacing: -2.5px;
+            margin: 12px 0 0
+        }
+
+        .head p {
+            max-width: 330px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8
+        }
+
+        /* 3D Animal Category Showcase */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            margin-top: 12px;
+        }
+
+        .anim-cat-card {
+            position: relative;
+            border-radius: 26px;
+            background: #ffffff;
+            border: 1px solid rgba(220, 226, 210, 0.7);
+            box-shadow: 0 12px 32px rgba(32, 39, 31, 0.05), 0 2px 6px rgba(32, 39, 31, 0.02);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+            transform-style: preserve-3d;
+            perspective: 900px;
+            user-select: none;
+        }
+
+        .anim-cat-card:focus-visible {
+            outline: 2px solid var(--ink);
+            outline-offset: 3px;
+        }
+
+        /* Desktop: Top row has 4 cards (span 3 cols each = 12), Bottom row has 3 cards (span 4 cols each = 12) */
+        .anim-cat-card:nth-child(1),
+        .anim-cat-card:nth-child(2),
+        .anim-cat-card:nth-child(3),
+        .anim-cat-card:nth-child(4) {
+            grid-column: span 3;
+        }
+
+        .anim-cat-card:nth-child(5),
+        .anim-cat-card:nth-child(6),
+        .anim-cat-card:nth-child(7) {
+            grid-column: span 4;
+        }
+
+        .anim-cat-card:hover {
+            box-shadow: 0 28px 58px rgba(32, 39, 31, 0.12), 0 8px 22px rgba(32, 39, 31, 0.05);
+            border-color: rgba(138, 168, 62, 0.55);
+        }
+
+        .card-bg-glow {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.85;
+            transition: opacity 0.35s ease;
+            z-index: 0;
+        }
+
+        .anim-cat-card:hover .card-bg-glow {
+            opacity: 1;
+        }
+
+        .glow-dog { background: radial-gradient(circle at 50% 20%, #edf5e3 0%, #ffffff 78%); }
+        .glow-cat { background: radial-gradient(circle at 50% 20%, #fceedf 0%, #ffffff 78%); }
+        .glow-bird { background: radial-gradient(circle at 50% 20%, #e1f5f2 0%, #ffffff 78%); }
+        .glow-rabbit { background: radial-gradient(circle at 50% 20%, #eaf5df 0%, #ffffff 78%); }
+        .glow-fish { background: radial-gradient(circle at 50% 20%, #dff4f7 0%, #ffffff 78%); }
+        .glow-smallpet { background: radial-gradient(circle at 50% 20%, #f9efe0 0%, #ffffff 78%); }
+        .glow-farm { background: radial-gradient(circle at 50% 20%, #edf3df 0%, #ffffff 78%); }
+
+        .card-env-badge {
+            position: absolute;
+            top: 18px;
+            left: 20px;
+            z-index: 3;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            color: #556050;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(8px);
+            padding: 5px 12px;
+            border-radius: 99px;
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(32, 39, 31, 0.04);
+        }
+
+        .badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot-dog { background: #8aa83e; box-shadow: 0 0 8px #8aa83e88; }
+        .dot-cat { background: #ee8655; box-shadow: 0 0 8px #ee865588; }
+        .dot-bird { background: #00b48a; box-shadow: 0 0 8px #00b48a88; }
+        .dot-rabbit { background: #7cb342; box-shadow: 0 0 8px #7cb34288; }
+        .dot-fish { background: #00acc1; box-shadow: 0 0 8px #00acc188; }
+        .dot-smallpet { background: #e09f58; box-shadow: 0 0 8px #e09f5888; }
+        .dot-farm { background: #689f38; box-shadow: 0 0 8px #689f3888; }
+
+        .card-canvas-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 235px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 24px 24px 0 0;
+        }
+
+        .card-3d-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            pointer-events: none;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            padding: 16px 22px 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            background: #ffffffef;
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(230, 235, 222, 0.6);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .card-header h3 {
+            font: 800 20px Manrope;
+            letter-spacing: -0.8px;
+            margin: 0;
+            color: var(--ink);
+        }
+
+        .card-badge-pill {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 99px;
+            background: var(--sage);
+            color: #556050;
+        }
+
+        .card-content p {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin: 0 0 16px;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .explore-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--ink);
+            background: #edf1e4;
+            padding: 9px 16px;
+            border-radius: 99px;
+            transition: all 0.25s ease;
+        }
+
+        .explore-btn .arrow {
+            display: inline-block;
+            transition: transform 0.25s ease;
+            font-size: 12px;
+        }
+
+        .anim-cat-card:hover .explore-btn {
+            background: var(--lime);
+            transform: translateX(2px);
+        }
+
+        .anim-cat-card:hover .explore-btn .arrow {
+            transform: translate(2px, -2px);
+        }
+
+        .services {
+            background: #fff
+        }
+
+        .servicegrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px
+        }
+
+        .service {
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 13px;
+            transition: .25s
+        }
+
+        .service:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 35px #26321a0d
+        }
+
+        .service img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 14px
+        }
+
+        .service h3 {
+            font: 800 17px Manrope;
+            margin: 16px 5px 6px
+        }
+
+        .service p {
+            font-size: 11px;
+            line-height: 1.7;
+            color: var(--muted);
+            margin: 0 5px 15px
+        }
+
+        .service a {
+            margin: 0 5px 5px;
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            border-bottom: 1px solid #a7ba6b;
+            padding-bottom: 4px
+        }
+
+        .products {
+            background: #f7f7f0
+        }
+
+        .filters {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap
+        }
+
+        .filter {
+            border: 1px solid var(--line);
+            background: transparent;
+            border-radius: 99px;
+            padding: 9px 15px;
+            font-size: 10px;
+            cursor: pointer
+        }
+
+        .filter.active,
+        .filter:hover {
+            background: var(--ink);
+            color: white;
+            border-color: var(--ink)
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px
+        }
+
+        .product {
+            background: #fff;
+            border: 1px solid #eff0e8;
+            border-radius: 17px;
+            padding: 10px;
+            transition: .25s
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 35px #29351d12
+        }
+
+        .visual {
+            height: 195px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            position: relative;
+            overflow: hidden;
+            background: #edf0e4
+        }
+
+        .visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: .35s
+        }
+
+        .product:hover .visual img {
+            transform: scale(1.07) rotate(-3deg)
+        }
+
+        .tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            padding: 6px 9px;
+            border-radius: 99px;
+            font-size: 8px;
+            font-weight: 800
+        }
+
+        .add {
+            position: absolute;
+            right: 9px;
+            bottom: 9px;
+            width: 34px;
+            height: 34px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--lime);
+            font-size: 19px;
+            cursor: pointer
+        }
+
+        .pinfo {
+            padding: 12px 4px 4px
+        }
+
+        .pinfo small {
+            font-size: 9px;
+            color: #899184
+        }
+
+        .pinfo h3 {
+            font: 700 13px Manrope;
+            margin: 6px 0 8px
+        }
+
+        .price {
+            font-size: 12px;
+            font-weight: 800
+        }
+
+        .old {
+            font-size: 10px;
+            color: #9da397;
+            text-decoration: line-through;
+            margin-left: 5px
+        }
+
+        .story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8%;
+            align-items: center
+        }
+
+        .storyart {
+            background: #e8eddb;
+            border-radius: 23px;
+            height: 420px;
+            display: grid;
+            place-items: center;
+            overflow: hidden
+        }
+
+        .storyart img {
+            width: 95%;
+            height: 95%;
+            object-fit: contain
+        }
+
+        .story h2 {
+            font: 800 44px/1.08 Manrope;
+            letter-spacing: -2.5px;
+            margin: 15px 0
+        }
+
+        .story p {
+            font-size: 12px;
+            line-height: 1.9;
+            color: var(--muted)
+        }
+
+        .statrow {
+            display: flex;
+            gap: 30px;
+            margin: 25px 0
+        }
+
+        .stat strong {
+            font: 800 24px Manrope;
+            display: block
+        }
+
+        .stat span {
+            font-size: 9px;
+            color: var(--muted)
+        }
+
+        .newsletter {
+            margin: 0 7% 75px;
+            padding: 45px 6%;
+            background: var(--ink);
+            border-radius: 24px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px
+        }
+
+        .newsletter h2 {
+            font: 800 32px Manrope;
+            margin: 10px 0
+        }
+
+        .newsletter p {
+            color: #b7c0af;
+            font-size: 11px
+        }
+
+        .signup {
+            display: flex;
+            background: white;
+            border-radius: 99px;
+            padding: 5px;
+            min-width: 320px
+        }
+
+        .signup input {
+            border: 0;
+            outline: 0;
+            padding: 0 12px;
+            flex: 1;
+            min-width: 0;
+            font-size: 11px
+        }
+
+        .signup button {
+            border: 0;
+            border-radius: 99px;
+            background: var(--lime);
+            padding: 12px 15px;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer
+        }
+
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 28px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: #7e8779
+        }
+
+        .footlinks {
+            display: flex;
+            gap: 20px
+        }
+
+        .drawer-bg {
+            position: fixed;
+            inset: 0;
+            background: #10170d66;
+            z-index: 49;
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s
+        }
+
+        .drawer-bg.show {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        .drawer {
+            position: fixed;
+            right: -420px;
+            top: 0;
+            height: 100vh;
+            width: min(390px, 100%);
+            background: white;
+            z-index: 50;
+            padding: 23px;
+            display: flex;
+            flex-direction: column;
+            transition: .35s
+        }
+
+        .drawer.open {
+            right: 0
+        }
+
+        .drawerhead {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 15px
+        }
+
+        .draweritems {
+            flex: 1;
+            overflow: auto
+        }
+
+        .lineitem {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 11px
+        }
+
+        .total {
+            border-top: 1px solid var(--line);
+            padding-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 800
+        }
+
+        .x {
+            border: 0;
+            background: none;
+            font-size: 24px;
+            cursor: pointer
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translate(-50%, 20px);
+            opacity: 0;
+            background: var(--ink);
+            color: white;
+            padding: 13px 19px;
+            border-radius: 99px;
+            font-size: 11px;
+            z-index: 80;
+            transition: .25s;
+            pointer-events: none
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0)
+        }
+
+        .modalbg {
+            position: fixed;
+            inset: 0;
+            background: #10170d77;
+            z-index: 70;
+            display: none;
+            place-items: center;
+            padding: 18px
+        }
+
+        .modalbg.show {
+            display: grid
+        }
+
+        .modal {
+            background: white;
+            border-radius: 22px;
+            padding: 25px;
+            width: min(440px, 100%);
+            max-height: 90vh;
+            overflow: auto
+        }
+
+        .modal h3 {
+            font: 800 22px Manrope;
+            margin: 5px 0 8px
+        }
+
+        .modal p {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.7
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+            margin: 12px 0
+        }
+
+        .field label {
+            font-size: 10px;
+            font-weight: 700
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 11px;
+            background: #fff
+        }
+
+        .field textarea {
+            min-height: 75px
+        }
+
+        .modalactions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 16px
+        }
+
+        @media(max-width:900px) {
+            .nav {
+                padding: 0 4%
+            }
+
+            .links {
+                gap: 14px
+            }
+
+            .hero {
+                padding: 40px 5%;
+                grid-template-columns: 1fr 1fr
+            }
+
+            .scene-wrap {
+                height: 400px
+            }
+
+            .section {
+                padding: 70px 5%
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .anim-cat-card:nth-child(n) {
+                grid-column: span 1;
+            }
+
+            .anim-cat-card:nth-child(7) {
+                grid-column: span 2;
+            }
+
+            .card-canvas-container {
+                height: 220px;
+            }
+
+            .newsletter {
+                margin: 0 5% 60px
+            }
+
+            .servicegrid {
+                grid-template-columns: repeat(3, 1fr)
+            }
+        }
+
+        @media(max-width:600px) {
+            .nav {
+                height: 66px
+            }
+
+            .links {
+                display: none
+            }
+
+            .logo {
+                font-size: 22px
+            }
+
+            .nav .btn {
+                padding: 11px 14px
+            }
+
+            .hero {
+                display: flex;
+                flex-direction: column;
+                padding: 45px 6% 30px
+            }
+
+            .hero h1 {
+                font-size: 57px;
+                letter-spacing: -3px
+            }
+
+            .scene-wrap {
+                height: 340px;
+                width: 100%
+            }
+
+            .orb {
+                width: 85%
+            }
+
+            .float {
+                font-size: 8px;
+                padding: 10px
+            }
+
+            .float b {
+                font-size: 11px
+            }
+
+            .section {
+                padding: 55px 6%
+            }
+
+            .head {
+                display: block
+            }
+
+            .head p {
+                margin-top: 12px
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .anim-cat-card:nth-child(n) {
+                grid-column: span 1;
+            }
+
+            .card-canvas-container {
+                height: 205px;
+            }
+
+            .card-header h3 {
+                font-size: 18px;
+            }
+
+            .grid {
+                gap: 9px
+            }
+
+            .visual {
+                height: 145px
+            }
+
+            .product {
+                padding: 7px
+            }
+
+            .pinfo h3 {
+                font-size: 11px
+            }
+
+            .servicegrid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px
+            }
+
+            .service img {
+                height: 130px
+            }
+
+            .service h3 {
+                font-size: 14px
+            }
+
+            .story {
+                grid-template-columns: 1fr;
+                gap: 25px
+            }
+
+            .storyart {
+                height: 290px
+            }
+
+            .story h2 {
+                font-size: 37px
+            }
+
+            .statrow {
+                gap: 20px
+            }
+
+            .newsletter {
+                display: block;
+                padding: 30px 22px;
+                margin-bottom: 45px
+            }
+
+            .newsletter h2 {
+                font-size: 27px
+            }
+
+            .signup {
+                min-width: 0;
+                margin-top: 20px
+            }
+
+            .footlinks {
+                display: none
+            }
+
+            footer {
+                padding: 22px 6%
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="announcement">FREE SHIPPING ON ORDERS OVER ₹999 &nbsp; ✳ &nbsp; GOOD THINGS FOR GOOD PETS</div>
+    <nav class="nav"><a class="logo" href="#">pet<span>verse.</span></a>
+        <div class="links"><a href="#shop">Shop</a><a href="#services">Services</a><a
+                href="#categories">Categories</a><a href="#story">Our story</a><a href="#footer">Contact</a></div>
+        <div class="navright"><button class="cartbtn" onclick="toggleCart()" aria-label="Open cart">♧<span class="count"
+                    id="count">0</span></button><a class="btn" href="#shop">Shop now ↗</a></div>
+    </nav>
+    <main>
+        <section class="hero">
+            <div>
+                <div class="kicker">A happier world for pets</div>
+                <h1>Love them<br>like <em>family.</em><br>Care like it.</h1>
+                <p>Thoughtful essentials, trusted care and little everyday joys for the companions who make life better.
+                    Everything your pet needs, all in one happy place.</p>
+                <div class="actions"><a class="btn" href="#shop">Explore the shop ↗</a><a class="btn light"
+                        href="#services">Discover services</a></div>
+                <div class="hero-meta">✳ &nbsp;<b>12,000+ happy pet parents</b> &nbsp;·&nbsp; Curated with care</div>
+            </div>
+            <div class="scene-wrap">
+                <div class="orb"></div><canvas id="pet3d" aria-label="Interactive 3D pet illustration"></canvas>
+                <div class="float f1">✦ MADE FOR PETS<b>Only feel-good finds</b></div>
+                <div class="float f2">♡ PET PARENT APPROVED<b>4.9 / 5 happy rating</b></div><span
+                    class="star st1">✳</span><span class="star st2">✦</span>
+            </div>
+        </section>
+        <div class="marquee"><span>SHOP WITH LOVE</span> ✳ <span>CARE WITH CONFIDENCE</span> ✳ <span>HAPPY PETS, HAPPY
+                HOMES</span> ✳ <span>SHOP WITH LOVE</span></div>
+        <section class="section categories-section" id="categories">
+            <div class="head">
+                <div>
+                    <div class="kicker">Interactive 3D animal showcase</div>
+                    <h2>Explore by companion.<br>Meet every living friend.</h2>
+                </div>
+                <p>Step into our animated 3D pet world. Hover, play, and explore thoughtfully selected essentials for every unique personality.</p>
+            </div>
+            <div class="category-grid" id="categoryGrid">
+                <!-- 1. Dogs -->
+                <article class="anim-cat-card" data-category="Dogs" tabindex="0" role="button" aria-label="Explore Dogs category">
+                    <div class="card-bg-glow glow-dog"></div>
+                    <div class="card-env-badge"><span class="badge-dot dot-dog"></span> 01 · CANINE</div>
+                    <div class="card-canvas-container">
+                        <canvas class="card-3d-canvas" id="canvas-dog" aria-label="Animated 3D Dog"></canvas>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3>Dogs</h3>
+                            <span class="card-badge-pill">Playful</span>
+                        </div>
+                        <p>Wag-worthy essentials, nutritious treats & cozy beds for your loyal best friend.</p>
+                        <div class="card-footer">
+                            <span class="explore-btn">Explore Category <span class="arrow">↗</span></span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 2. Cats -->
+                <article class="anim-cat-card" data-category="Cats" tabindex="0" role="button" aria-label="Explore Cats category">
+                    <div class="card-bg-glow glow-cat"></div>
+                    <div class="card-env-badge"><span class="badge-dot dot-cat"></span> 02 · FELINE</div>
+                    <div class="card-canvas-container">
+                        <canvas class="card-3d-canvas" id="canvas-cat" aria-label="Animated 3D Cat"></canvas>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3>Cats</h3>
+                            <span class="card-badge-pill">Curious</span>
+                        </div>
+                        <p>Curiosity-approved scratchers, feather toys & whisker bowls for feline royalty.</p>
+                        <div class="card-footer">
+                            <span class="explore-btn">Explore Category <span class="arrow">↗</span></span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3. Birds -->
+                <article class="anim-cat-card" data-category="Birds" tabindex="0" role="button" aria-label="Explore Birds category">
+                    <div class="card-bg-glow glow-bird"></div>
+                    <div class="card-env-badge"><span class="badge-dot dot-bird"></span> 03 · AVIARY</div>
+                    <div class="card-canvas-container">
+                        <canvas class="card-3d-canvas" id="canvas-bird" aria-label="Animated 3D Bird"></canvas>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3>Birds</h3>
+                            <span class="card-badge-pill">Cheerful</span>
+                        </div>
+                        <p>Natural wooden perches, aviary swings & nutrient-rich organic seed blends.</p>
+                        <div class="card-footer">
+                            <span class="explore-btn">Explore Category <span class="arrow">↗</span></span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 4. Rabbits -->
+                <article class="anim-cat-card" data-category="Rabbits" tabindex="0" role="button" aria-label="Explore Rabbits category">
+                    <div class="card-bg-glow glow-rabbit"></div>
+                    <div class="card-env-badge"><span class="badge-dot dot-rabbit"></span> 04 · MEADOW</div>
+                    <div class="card-canvas-container">
+                        <canvas class="card-3d-canvas" id="canvas-rabbit" aria-label="Animated 3D Rabbit"></canvas>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3>Rabbits</h3>
+                            <span class="card-badge-pill">Gentle</span>
+                        </div>
+                        <p>Sun-cured timothy hay, willow chew toys & soft cozy hideouts for hoppy friends.</p>
+                        <div class="card-footer">
+                            <span class="explore-btn">Explore Category <span class="arrow">↗</span></span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 5. Fish & Aquatic Pets -->
+                <article class="anim-cat-card" data-category="Fish" tabindex="0" role="button" aria-label="Explore Fish & Aquatic Pets category">
+                    <div class="card-bg-glow glow-fish"></div>
+                    <div class="card-env-badge"><span class="badge-dot dot-fish"></span> 05 · AQUATICS</div>
+                    <div class="card-canvas-container">
+                        <canvas class="card-3d-canvas" id="canvas-fish" aria-label="Animated 3D Fish"></canvas>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3>Fish & Aquatic Pets</h3>
+                            <span class="card-badge-pill">Serene</span>
+                        </div>
+                        <p>Ultra-clear aquariums, vibrant flake nutrition, quiet filtration & calming coral decor.</p>
+                        <div class="card-footer">
+                            <span class="explore-btn">Explore Category <span class="arrow">↗</span></span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 6. Small Pets -->
+                <article class="anim-cat-card" data-category="Small Pets" tabindex="0" role="button" aria-label="Explore Small Pets category">
+                    <div class="card-bg-glow glow-smallpet"></div>
+                    <div class="card-env-badge"><span class="badge-dot dot-smallpet"></span> 06 · POCKET PETS</div>
+                    <div class="card-canvas-container">
+                        <canvas class="card-3d-canvas" id="canvas-smallpet" aria-label="Animated 3D Small Pet"></canvas>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3>Small Pets</h3>
+                            <span class="card-badge-pill">Energetic</span>
+                        </div>
+                        <p>Whisper-quiet exercise wheels, cozy paper bedding, seed feasts & tunnel mazes.</p>
+                        <div class="card-footer">
+                            <span class="explore-btn">Explore Category <span class="arrow">↗</span></span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 7. Farm & Domestic Animals -->
+                <article class="anim-cat-card" data-category="Farm Animals" tabindex="0" role="button" aria-label="Explore Farm & Domestic Animals category">
+                    <div class="card-bg-glow glow-farm"></div>
+                    <div class="card-env-badge"><span class="badge-dot dot-farm"></span> 07 · BARNYARD</div>
+                    <div class="card-canvas-container">
+                        <canvas class="card-3d-canvas" id="canvas-farm" aria-label="Animated 3D Farm Animals"></canvas>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <h3>Farm & Domestic Animals</h3>
+                            <span class="card-badge-pill">Hearty</span>
+                        </div>
+                        <p>Pasture nutrition, grooming brushes, mineral salt blocks & durable barnyard care.</p>
+                        <div class="card-footer">
+                            <span class="explore-btn">Explore Category <span class="arrow">↗</span></span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <section class="section services" id="services">
+            <div class="head">
+                <div>
+                    <div class="kicker">More than a pet shop</div>
+                    <h2>Care that goes<br>beyond the cart.</h2>
+                </div>
+                <p>From a fresh groom to helpful wellness connections, we're here for every part of your pet's journey.
+                </p>
+            </div>
+            <div class="servicegrid">
+                <article class="service"><img
+                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2U0ZWVlNSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48cmVjdCB4PSIxNzAiIHk9IjE1MCIgd2lkdGg9IjI2MCIgaGVpZ2h0PSIyMTAiIHJ4PSI1NSIgZmlsbD0iI2I3YzliMiIvPjxjaXJjbGUgY3g9IjMwMCIgY3k9IjI0MCIgcj0iNzIiIGZpbGw9IiNkN2EzNmIiLz48Y2lyY2xlIGN4PSIyNzUiIGN5PSIyMzAiIHI9IjciIGZpbGw9IiMzMDJhMjUiLz48Y2lyY2xlIGN4PSIzMjUiIGN5PSIyMzAiIHI9IjciIGZpbGw9IiMzMDJhMjUiLz48ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMjU1IiByeD0iMTEiIHJ5PSI4IiBmaWxsPSIjMzAyYTI1Ii8+PHBhdGggZD0iTTI2MCAxNDUgUTMwMCA5MCAzNDAgMTQ1IiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMTMiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjx0ZXh0IHg9IjMwMCIgeT0iNDY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM2NzcwNWUiPkdlbnRsZSBncm9vbWluZyBjYXJlPC90ZXh0Pjwvc3ZnPg=="
+                        alt="Pet grooming">
+                    <h3>Gentle grooming</h3>
+                    <p>Bath, brush, tidy-up and nail care sessions designed around your pet's comfort.</p><a href="#"
+                        onclick="openBooking('Grooming appointment');return false">Book grooming ↗</a>
+                </article>
+                <article class="service"><img
+                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2UyZWVlZCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIyMzUiIHI9IjEwMCIgZmlsbD0iI2Q3YTM2YiIvPjxwYXRoIGQ9Ik0yMTAgMTY1IFEzMDAgOTAgMzkwIDE2NSIgZmlsbD0iI2VlZjNlYiIvPjxwYXRoIGQ9Ik0zMDAgMTI1IEwzMDAgMjE1IE0yNTUgMTcwIEwzNDUgMTcwIiBzdHJva2U9IiM3OGE1OWEiIHN0cm9rZS13aWR0aD0iMjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjI2NSIgY3k9IjI0MCIgcj0iOCIgZmlsbD0iIzMwMmEyNSIvPjxjaXJjbGUgY3g9IjMzNSIgY3k9IjI0MCIgcj0iOCIgZmlsbD0iIzMwMmEyNSIvPjxlbGxpcHNlIGN4PSIzMDAiIGN5PSIyNzAiIHJ4PSIxOCIgcnk9IjEyIiBmaWxsPSIjMzAyYTI1Ii8+PHRleHQgeD0iMzAwIiB5PSI0NjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzY3NzA1ZSI+V2VsbG5lc3Mgc3VwcG9ydDwvdGV4dD48L3N2Zz4="
+                        alt="Pet wellness">
+                    <h3>Wellness connections</h3>
+                    <p>Request a veterinary appointment with a partner clinic and get helpful care reminders.</p><a
+                        href="#" onclick="openBooking('Wellness appointment request');return false">Request appointment
+                        ↗</a>
+                </article>
+                <article class="service"><img
+                        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2VlZThkYiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48Y2lyY2xlIGN4PSIyMzUiIGN5PSIyNDUiIHI9Ijc1IiBmaWxsPSIjZDdhMzZiIi8+PGNpcmNsZSBjeD0iMzY1IiBjeT0iMjQ1IiByPSI3NSIgZmlsbD0iI2M4YzBiMiIvPjxwYXRoIGQ9Ik0xNzUgMTkwIEwxODAgMTEwIEwyMjUgMTcwIE0yNDUgMTcwIEwyOTAgMTEwIEwyOTUgMTkwIiBmaWxsPSIjYjQ3YTRjIi8+PHBhdGggZD0iTTMwNSAxOTAgTDMxMCAxMTAgTDM1MCAxNzAgTTM4MCAxNzAgTDQyNSAxMTAgTDQzMCAxOTAiIGZpbGw9IiNjOGMwYjIiLz48Y2lyY2xlIGN4PSIyMTUiIGN5PSIyNDUiIHI9IjYiIGZpbGw9IiMzMDJhMjUiLz48Y2lyY2xlIGN4PSIyNTUiIGN5PSIyNDUiIHI9IjYiIGZpbGw9IiMzMDJhMjUiLz48Y2lyY2xlIGN4PSIzNDUiIGN5PSIyNDUiIHI9IjYiIGZpbGw9IiMzMDJhMjUiLz48Y2lyY2xlIGN4PSIzODUiIGN5PSIyNDUiIHI9IjYiIGZpbGw9IiMzMDJhMjUiLz48dGV4dCB4PSIzMDAiIHk9IjQ2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNjc3MDVlIj5GaW5kIGEgZnJpZW5kIGZvciBsaWZlPC90ZXh0Pjwvc3ZnPg=="
+                        alt="Pet adoption">
+                    <h3>Adoption community</h3>
+                    <p>Meet pets looking for loving homes and send an enquiry to our adoption partners.</p><a href="#"
+                        onclick="openBooking('Adoption enquiry');return false">Explore adoption ↗</a>
+                </article>
+            </div>
+        </section>
+        <section class="section products" id="shop">
+            <div class="head">
+                <div>
+                    <div class="kicker">The pet parent edit</div>
+                    <h2>Little things.<br>Big happy moments.</h2>
+                </div>
+                <div class="filters">
+                    <button class="filter active" onclick="filterProducts('All',this)">All</button>
+                    <button class="filter" onclick="filterProducts('Dogs',this)">Dogs</button>
+                    <button class="filter" onclick="filterProducts('Cats',this)">Cats</button>
+                    <button class="filter" onclick="filterProducts('Birds',this)">Birds</button>
+                    <button class="filter" onclick="filterProducts('Rabbits',this)">Rabbits</button>
+                    <button class="filter" onclick="filterProducts('Fish',this)">Fish & Aquatics</button>
+                    <button class="filter" onclick="filterProducts('Small Pets',this)">Small Pets</button>
+                    <button class="filter" onclick="filterProducts('Farm Animals',this)">Farm Animals</button>
+                    <button class="filter" onclick="filterProducts('Food',this)">Food</button>
+                    <button class="filter" onclick="filterProducts('Toys',this)">Toys</button>
+                </div>
+            </div>
+            <div class="grid" id="productgrid"></div>
+        </section>
+        <section class="section story" id="story">
+            <div class="storyart"><img
+                    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2U2ZWRjZSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzMwIiByeD0iMTI4IiByeT0iODgiIGZpbGw9IiNjNThhNTAiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIyMzAiIHI9IjExMiIgZmlsbD0iI2Q4YTM2YSIvPjxlbGxpcHNlIGN4PSIyMjUiIGN5PSIxNzUiIHJ4PSIzNSIgcnk9IjcwIiB0cmFuc2Zvcm09InJvdGF0ZSgtMjUgMjI1IDE3NSkiIGZpbGw9IiNhOTZkNDIiLz48ZWxsaXBzZSBjeD0iMzc1IiBjeT0iMTc1IiByeD0iMzUiIHJ5PSI3MCIgdHJhbnNmb3JtPSJyb3RhdGUoMjUgMzc1IDE3NSkiIGZpbGw9IiNhOTZkNDIiLz48ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMjc1IiByeD0iNjIiIHJ5PSI0OCIgZmlsbD0iI2Y1ZTdjZiIvPjxjaXJjbGUgY3g9IjI2MiIgY3k9IjIyNSIgcj0iOSIgZmlsbD0iIzJlMmIyNyIvPjxjaXJjbGUgY3g9IjMzOCIgY3k9IjIyNSIgcj0iOSIgZmlsbD0iIzJlMmIyNyIvPjxlbGxpcHNlIGN4PSIzMDAiIGN5PSIyNjUiIHJ4PSIxMyIgcnk9IjkiIGZpbGw9IiMyZTJiMjciLz48cGF0aCBkPSJNMjg2IDI4NCBRMzAwIDMwMCAzMTQgMjg0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3NTQ1MmYiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHRleHQgeD0iMzAwIiB5PSI0NjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzY3NzA1ZSI+QSBoYXBweSBwZXQgbWFrZXMgYSBoYXBweSBob21lPC90ZXh0Pjwvc3ZnPg=="
+                    alt="PetVerse happy dog"></div>
+            <div>
+                <div class="kicker">Our little big idea</div>
+                <h2>Because they're not pets. They're <em style="color:#89a83e;font-style:normal">family.</em></h2>
+                <p>PetVerse brings quality pet essentials and thoughtful care services together in one welcoming place.
+                    We make it easier for pet parents to find the right products, arrange grooming, connect with
+                    wellness providers and discover adoption opportunities — with care at the heart of every choice.</p>
+                <div class="statrow">
+                    <div class="stat"><strong>350+</strong><span>Curated essentials</span></div>
+                    <div class="stat"><strong>12k+</strong><span>Happy pet parents</span></div>
+                    <div class="stat"><strong>4.9★</strong><span>Demo rating</span></div>
+                </div><a class="btn" href="#services">Explore how we care ↗</a>
+            </div>
+        </section>
+        <section class="newsletter">
+            <div>
+                <div class="kicker" style="color:#d8f27a">The good-news club</div>
+                <h2>More joy in their inbox.</h2>
+                <p>Pet-care tips, new arrivals and little reasons to smile.</p>
+            </div>
+            <form class="signup"
+                onsubmit="event.preventDefault();notify('You’re on the PetVerse list! 💚');this.reset()"><input
+                    type="email" placeholder="Your email address" required><button>Join us ↗</button></form>
+        </section>
+    </main>
+    <footer id="footer"><a class="logo" href="#">pet<span>verse.</span></a><span>Made with ♥ for every good boy &
+            girl.</span>
+        <div class="footlinks"><a href="#shop">Shop</a><a href="#services">Services</a><a href="#story">Our story</a>
+        </div><span>© 2026 PetVerse · Demo store</span>
+    </footer>
+    <div class="drawer-bg" id="drawerbg" onclick="toggleCart()"></div>
+    <aside class="drawer" id="drawer">
+        <div class="drawerhead"><b style="font:800 19px Manrope">Your basket</b><button class="x"
+                onclick="toggleCart()">×</button></div>
+        <div class="draweritems" id="draweritems">
+            <p style="color:#899184;font-size:12px">Your basket is waiting for some love.</p>
+        </div>
+        <div class="total"><span>Subtotal</span><span id="subtotal">₹0</span></div><button class="btn"
+            style="justify-content:center;margin-top:15px"
+            onclick="notify('Demo checkout — your basket is ready!')">Continue to checkout ↗</button>
+    </aside>
+    <div class="modalbg" id="modalbg">
+        <div class="modal">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div class="kicker">Let's make it happen</div><button class="x" onclick="closeModal()">×</button>
+            </div>
+            <h3 id="modalTitle">Book a service</h3>
+            <p id="modalDesc">Share a few details and our demo team will get back to you.</p>
+            <form id="bookingForm" onsubmit="submitBooking(event)">
+                <div class="field"><label>Your name</label><input required placeholder="Pet parent's name"></div>
+                <div class="field"><label>Email or phone</label><input required placeholder="How can we reach you?">
+                </div>
+                <div class="field"><label>Pet's name</label><input required placeholder="Your pet's name"></div>
+                <div class="field"><label>Preferred date</label><input required type="date"></div>
+                <div class="field"><label>Notes</label><textarea
+                        placeholder="Tell us anything helpful about your pet"></textarea></div>
+                <div class="modalactions"><button type="button" class="btn light"
+                        onclick="closeModal()">Cancel</button><button class="btn" type="submit">Send request ↗</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script>
+        const A = { 
+            DOG: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2U2ZWRjZSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzMwIiByeD0iMTI4IiByeT0iODgiIGZpbGw9IiNjNThhNTAiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIyMzAiIHI9IjExMiIgZmlsbD0iI2Q4YTM2YSIvPjxlbGxpcHNlIGN4PSIyMjUiIGN5PSIxNzUiIHJ4PSIzNSIgcnk9IjcwIiB0cmFuc2Zvcm09InJvdGF0ZSgtMjUgMjI1IDE3NSkiIGZpbGw9IiNhOTZkNDIiLz48ZWxsaXBzZSBjeD0iMzc1IiBjeT0iMTc1IiByeD0iMzUiIHJ5PSI3MCIgdHJhbnNmb3JtPSJyb3RhdGUoMjUgMzc1IDE3NSkiIGZpbGw9IiNhOTZkNDIiLz48ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMjc1IiByeD0iNjIiIHJ5PSI0OCIgZmlsbD0iI2Y1ZTdjZiIvPjxjaXJjbGUgY3g9IjI2MiIgY3k9IjIyNSIgcj0iOSIgZmlsbD0iIzJlMmIyNyIvPjxjaXJjbGUgY3g9IjMzOCIgY3k9IjIyNSIgcj0iOSIgZmlsbD0iIzJlMmIyNyIvPjxlbGxpcHNlIGN4PSIzMDAiIGN5PSIyNjUiIHJ4PSIxMyIgcnk9IjkiIGZpbGw9IiMyZTJiMjciLz48cGF0aCBkPSJNMjg2IDI4NCBRMzAwIDMwMCAzMTQgMjg0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3NTQ1MmYiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHRleHQgeD0iMzAwIiB5PSI0NjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzY3NzA1ZSI+QSBoYXBweSBwZXQgbWFrZXMgYSBoYXBweSBob21lPC90ZXh0Pjwvc3ZnPg==",
+            CAT: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2U4ZTVkYyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIyNjAiIHI9IjExOCIgZmlsbD0iI2M4YzBiMiIvPjxwYXRoIGQ9Ik0yMDggMTkwIEwyMTUgNjUgTDI4NSAxNTBaIE0zMTUgMTUwIEwzODUgNjUgTDM5MiAxOTBaIiBmaWxsPSIjYzhjMGIyIi8+PHBhdGggZD0iTTIzMiAxNTAgTDIzNSAxMDUgTDI2NSAxNDVaIE0zMzUgMTQ1IEwzNjUgMTA1IEwzNjggMTUwWiIgZmlsbD0iI2Q4OGQ4OCIvPjxjaXJjbGUgY3g9IjI2MCIgY3k9IjI1MCIgcj0iMTAiIGZpbGw9IiMzMDM1MmQiLz48Y2lyY2xlIGN4PSIzNDAiIGN5PSIyNTAiIHI9IjEwIiBmaWxsPSIjMzAzNTJkIi8+PHBhdGggZD0iTTI5MCAyODAgUTMwMCAyOTAgMzEwIDI4MCBNMzAwIDI5MCBRMjgwIDMxMCAyNjAgMjkyIE0zMDAgMjkwIFEzMjAgMzEwIDM0MCAyOTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzhhNjU1OSIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNMjA1IDI4NSBMMTE1IDI2NSBNMjA1IDMwNSBMMTE1IDMxNSBNMzk1IDI4NSBMNDg1IDI2NSBNMzk1IDMwNSBMNDg1IDMxNSIgc3Ryb2tlPSIjOGE4NTdjIiBzdHJva2Utd2lkdGg9IjQiLz48dGV4dCB4PSIzMDAiIHk9IjQ2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNjc3MDVlIj5Gb3IgY3VyaW91cyBsaXR0bGUgY29tcGFuaW9uczwvdGV4dD48L3N2Zz4=",
+            FOOD: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2YyZTdkNCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48cGF0aCBkPSJNMTg1IDE2NSBMNDE1IDE2NSBMMzkwIDM5MCBRMzAwIDQzMCAyMTAgMzkwWiIgZmlsbD0iI2Q2YTQ1ZSIgc3Ryb2tlPSIjOTU2ZDNkIiBzdHJva2Utd2lkdGg9IjgiLz48cGF0aCBkPSJNMTg1IDE2NSBMNDE1IDE2NSBMNDAwIDIyMCBMMjAwIDIyMFoiIGZpbGw9IiNmNGRmYjgiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIzMDAiIHI9IjYwIiBmaWxsPSIjZjdlZWQ5Ii8+PHBhdGggZD0iTTI3MCAzMDAgUTMwMCAyNDUgMzMwIDMwMCBRMzAwIDM1NSAyNzAgMzAwIiBmaWxsPSIjOTBhOTUxIi8+PHRleHQgeD0iMzAwIiB5PSIyNTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiM2NTQ4MmQiPlBFVCBCSVRFUzwvdGV4dD48dGV4dCB4PSIzMDAiIHk9IjQ2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNjc3MDVlIj5FdmVyeWRheSBudXRyaXRpb248L3RleHQ+PC9zdmc+",
+            BED: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2U0ZWJkOCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzIwIiByeD0iMTkwIiByeT0iMTEyIiBmaWxsPSIjOTFhOTZjIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjMwMCIgcng9IjE0NSIgcnk9IjcyIiBmaWxsPSIjZGNlN2JkIi8+PHBhdGggZD0iTTEzNSAzMTUgUTE1MCAyMDAgMzAwIDIxNSBRNDUwIDIwMCA0NjUgMzE1IiBmaWxsPSJub25lIiBzdHJva2U9IiM3MThiNTAiIHN0cm9rZS13aWR0aD0iMzAiLz48ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMzAwIiByeD0iOTUiIHJ5PSI0NCIgZmlsbD0iI2Y1ZWRkYiIvPjx0ZXh0IHg9IjMwMCIgeT0iNDY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM2NzcwNWUiPkNvbWZvcnQgbWFkZSBmb3IgbmFwczwvdGV4dD48L3N2Zz4=",
+            LEASH: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2YzZTNkOSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48cGF0aCBkPSJNMjMwIDEyMCBDMTIwIDE3MCAxODAgMzQwIDMwMCAzNjAgQzQyMCAzODAgNDgwIDIyMCAzNzAgMTQwIiBmaWxsPSJub25lIiBzdHJva2U9IiNkNDc3NTIiIHN0cm9rZS13aWR0aD0iMzQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik0yMzAgMTIwIEwyMDAgODUgUTE3MCA2NSAxNTAgOTUgTDE3NSAxNDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E5NWQ0MCIgc3Ryb2tlLXdpZHRoPSIyMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMzAwIiBjeT0iMzYwIiByPSIyNCIgZmlsbD0iI2U4YzY2ZSIvPjx0ZXh0IHg9IjMwMCIgeT0iNDY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM2NzcwNWUiPlJlYWR5IGZvciBldmVyeSBhZHZlbnR1cmU8L3RleHQ+PC9zdmc+",
+            TOY: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2U4ZWRkZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIyNzAiIHI9IjEyMCIgZmlsbD0iI2U5OWE3MCIvPjxwYXRoIGQ9Ik0yMDUgMjEwIFEzMDAgMTYwIDM5NSAyMTAgTTIwNSAzMzAgUTMwMCAzODAgMzk1IDMzMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmMWQ5IiBzdHJva2Utd2lkdGg9IjIyIi8+PHBhdGggZD0iTTMwMCAxNTAgUTI1MCAyNzAgMzAwIDM5MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzg2ZjRjIiBzdHJva2Utd2lkdGg9IjkiLz48dGV4dCB4PSIzMDAiIHk9IjQ2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNjc3MDVlIj5QbGF5dGltZSBmYXZvdXJpdGVzPC90ZXh0Pjwvc3ZnPg==",
+            BOWL: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2UxZWNlOCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48cGF0aCBkPSJNMTUwIDIzMCBRMzAwIDI5MCA0NTAgMjMwIEw0MjAgMzY1IFEzMDAgNDIwIDE4MCAzNjVaIiBmaWxsPSIjODlhOWExIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjIzMCIgcng9IjE1MCIgcnk9IjQwIiBmaWxsPSIjYjdkMGM3Ii8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjIzMCIgcng9IjExMiIgcnk9IjIzIiBmaWxsPSIjZjRlOGNhIi8+PHRleHQgeD0iMzAwIiB5PSI0NjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzY3NzA1ZSI+TGl0dGxlIGV2ZXJ5ZGF5IGVzc2VudGlhbHM8L3RleHQ+PC9zdmc+",
+            BIRD: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2UwZjdmNCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48cmVjdCB4PSIxODAiIHk9IjMyMCIgd2lkdGg9IjI0MCIgaGVpZ2h0PSIxOCIgcng9IjkiIGZpbGw9IiM4ZDZlNjMiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIyNDAiIHI9Ijg1IiBmaWxsPSIjMDBiNDhhIi8+PHBhdGggZD0iTTI2MCAyMTAgUTI4MCAxNDAgMzAwIDI0MCBRMzQwIDIwMCAzMjAgMjcwIFoiIGZpbGw9IiNmOWM3NGYiLz48Y2lyY2xlIGN4PSIyODAiIGN5PSIyMTUiIHI9IjgiIGZpbGw9IiMxYTFhMWEiLz48cG9seWdvbiBwb2ludHM9IjI1NSwyMjUgMjIwLDI0MCAyNTUsMjUwIiBmaWxsPSIjZjk4NDRhIi8+PHBhdGggZD0iTTM0MCAyNTAgUTM5MCAzMjAgNDIwIDM2MCBRMzgwIDM0MCAzMzAgMjgwIFoiIGZpbGw9IiMxMThhYjIiLz48dGV4dCB4PSIzMDAiIHk9IjQ2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNjc3MDVlIj5WaWJyYW50IGZlYXRoZXJlZCBmcmllbmRzPC90ZXh0Pjwvc3ZnPg==",
+            RABBIT: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2VhZjVkZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIyODAiIHI9Ijk1IiBmaWxsPSIjZmRmYmY3Ii8+PGNpcmNsZSBjeD0iMzAwIiBjeT0iMjEwIiByPSI3NSIgZmlsbD0iI2ZkZmJmNyIvPjxlbGxpcHNlIGN4PSIyNjUiIGN5PSIxMTUiIHJ4PSIyMiIgcnk9IjY1IiB0cmFuc2Zvcm09InJvdGF0ZSgtMTUgMjY1IDExNSkiIGZpbGw9IiNmZGZiZjciLz48ZWxsaXBzZSBjeD0iMjY1IiBjeT0iMTE1IiByeD0iMTIiIHJ5PSI0OCIgdHJhbnNmb3JtPSJyb3RhdGUoLTE1IDI2NSAxMTUpIiBmaWxsPSIjZmZkMWRjIi8+PGVsbGlwc2UgY3g9IjMzNSIgY3k9IjExNSIgcng9IjIyIiByeT0iNjUiIHRyYW5zZm9ybT0icm90YXRlKDE4IDMzNSAxMTUpIiBmaWxsPSIjZmRmYmY3Ii8+PGVsbGlwc2UgY3g9IjMzNSIgY3k9IjExNSIgcng9IjEyIiByeT0iNDgiIHRyYW5zZm9ybT0icm90YXRlKDE4IDMzNSAxMTUpIiBmaWxsPSIjZmZkMWRjIi8+PGNpcmNsZSBjeD0iMjcwIiBjeT0iMjA1IiByPSI4IiBmaWxsPSIjMmIxODEwIi8+PGNpcmNsZSBjeD0iMzMwIiBjeT0iMjA1IiByPSI4IiBmaWxsPSIjMmIxODEwIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjIyNSIgcng9IjkiIHJ5PSI2IiBmaWxsPSIjZmZiN2IyIi8+PGNpcmNsZSBjeD0iMjE1IiBjeT0iMzAwIiByPSIyOCIgZmlsbD0iI2ZkZmJmNyIvPjx0ZXh0IHg9IjMwMCIgeT0iNDY1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiM2NzcwNWUiPkdlbnRsZSBob3BweSBjb21wYW5pb25zPC90ZXh0Pjwvc3ZnPg==",
+            FISH: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2RmZjRmNyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48ZWxsaXBzZSBjeD0iMzAwIiBjeT0iMjYwIiByeD0iMTEwIiByeT0iNzAiIGZpbGw9IiNmZjZiMzUiLz48cGF0aCBkPSJNMjUwIDE5NSBRMjY1IDI2MCAyNTAgMzI1IFEyMzUgMzI1IDIzNSAxOTUgWiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0zMjAgMjA1IFEzMzIgMjYwIDMyMCAzMTUgUTMxMCAzMTUgMzEwIDIwNSBaIiBmaWxsPSIjZmZmZmZmIi8+PHBvbHlnb24gcG9pbnRzPSI0MDAsMjYwIDQ4MCwyMTAgNDYwLDI2MCA0ODAsMzEwIiBmaWxsPSIjZmY4YTUwIi8+PGNpcmNsZSBjeD0iMjMwIiBjeT0iMjQ1IiByPSI5IiBmaWxsPSIjMWExYTFhIi8+PGNpcmNsZSBjeD0iMzgwIiBjeT0iMTYwIiByPSIxNCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iLjYiLz48Y2lyY2xlIGN4PSI0MTAiIGN5PSIxMjAiIHI9IjkiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9Ii42Ii8+PHRleHQgeD0iMzAwIiB5PSI0NjUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNyIgZmlsbD0iIzY3NzA1ZSI+UGVhY2VmdWwgYXF1YXRpYyBsaWZlPC90ZXh0Pjwvc3ZnPg==",
+            HAMSTER: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2Y5ZWZlMCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIyNzAiIHI9IjEwNSIgZmlsbD0iI2UwOWY1OCIvPjxlbGxpcHNlIGN4PSIzMDAiIGN5PSIzMDUiIHJ4PSI3MCIgcnk9IjU1IiBmaWxsPSIjZmZmNmViIi8+PGNpcmNsZSBjeD0iMjI1IiBjeT0iMTg1IiByPSIyOCIgZmlsbD0iI2UwOWY1OCIvPjxjaXJjbGUgY3g9IjIyNSIgY3k9IjE4NSIgcj0iMTYiIGZpbGw9IiNmNDhmYjEiLz48Y2lyY2xlIGN4PSIzNzUiIGN5PSIxODUiIHI9IjI4IiBmaWxsPSIjZTA5ZjU4Ii8+PGNpcmNsZSBjeD0iMzc1IiBjeT0iMTg1IiByPSIxNiIgZmlsbD0iI2Y0OGZiMSIvPjxjaXJjbGUgY3g9IjI2MCIgY3k9IjI0NSIgcj0iOSIgZmlsbD0iIzFhMWExYSIvPjxjaXJjbGUgY3g9IjM0MCIgY3k9IjI0NSIgcj0iOSIgZmlsbD0iIzFhMWExYSIvPjxlbGxpcHNlIGN4PSIzMDAiIGN5PSIyNzAiIHJ4PSIxMCIgcnk9IjciIGZpbGw9IiNmNDhmYjEiLz48dGV4dCB4PSIzMDAiIHk9IjQ2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNjc3MDVlIj5Qb2NrZXQgcGV0IGhhcHBpbmVzczwvdGV4dD48L3N2Zz4=",
+            FARM: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgyPSIxIiB5Mj0iMSI+PHN0b3Agc3RvcC1jb2xvcj0iI2VkZjNkZiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZmRmNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNTAwIiByeD0iMzYiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSI0ODAiIGN5PSI4NSIgcj0iNjAiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii4zIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjQyMCIgcng9IjE1NSIgcnk9IjE4IiBmaWxsPSIjNWM2ODRhIiBvcGFjaXR5PSIuMTIiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIyNzAiIHI9IjEwNSIgZmlsbD0iI2ZlZmVmZSIvPjxlbGxpcHNlIGN4PSIyNTUiIGN5PSIyNDAiIHJ4PSIzNSIgcnk9IjQwIiBmaWxsPSIjMjIyMjIyIi8+PGVsbGlwc2UgY3g9IjM1NSIgY3k9IjI5MCIgcng9IjI4IiByeT0iMzIiIGZpbGw9IiMyMjIyMjIiLz48ZWxsaXBzZSBjeD0iMjE1IiBjeT0iMjEwIiByeD0iMTgiIHJ5PSIzOCIgdHJhbnNmb3JtPSJyb3RhdGUoLTM1IDIxNSAyMTApIiBmaWxsPSIjZmVmZWZlIi8+PGVsbGlwc2UgY3g9IjM4NSIgY3k9IjIxMCIgcng9IjE4IiByeT0iMzgiIHRyYW5zZm9ybT0icm90YXRlKDM1IDM4NSAyMTApIiBmaWxsPSIjMjIyMjIyIi8+PGNpcmNsZSBjeD0iMjYwIiBjeT0iMjM1IiByPSI5IiBmaWxsPSIjMWExYTFhIi8+PGNpcmNsZSBjeD0iMzQwIiBjeT0iMjM1IiByPSI5IiBmaWxsPSIjMWExYTFhIi8+PGVsbGlwc2UgY3g9IjMwMCIgY3k9IjI5MCIgcng9IjQyIiByeT0iMjYiIGZpbGw9IiNmZmNkZDIiLz48Y2lyY2xlIGN4PSIyODUiIGN5PSIyOTAiIHI9IjUiIGZpbGw9IiMyMjIyMjIiLz48Y2lyY2xlIGN4PSIzMTUiIGN5PSIyOTAiIHI9IjUiIGZpbGw9IiMyMjIyMjIiLz48dGV4dCB4PSIzMDAiIHk9IjQ2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE3IiBmaWxsPSIjNjc3MDVlIj5IZWFydHkgYmFybnlhcmQgY29tcGFuaW9uczwvdGV4dD48L3N2Zz4="
+        };
+        const products = [
+            { name: 'Cloud-soft comfort bed', category: 'Dogs', kind: 'Comfort', price: 1899, old: 2299, tag: 'BESTSELLER', img: A.BED },
+            { name: 'Everyday walk set & leash', category: 'Dogs', kind: 'Accessories', price: 799, old: 999, tag: 'PET PARENT PICK', img: A.LEASH },
+            { name: 'Whisker wonder scratcher', category: 'Cats', kind: 'Play', price: 1199, old: 1499, tag: 'CAT FAVOURITE', img: A.CAT },
+            { name: 'Curious ceramic cat bowl', category: 'Cats', kind: 'Essentials', price: 599, old: 749, tag: 'THOUGHTFUL PICK', img: A.BOWL },
+            { name: 'Skyline aviary swing & ladder', category: 'Birds', kind: 'Enrichment', price: 649, old: 849, tag: 'AVIARY PICK', img: A.BIRD },
+            { name: 'Tropical fruit & seed mix', category: 'Birds', kind: 'Nutrition', price: 499, old: 620, tag: 'NATURAL SEED', img: A.FOOD },
+            { name: 'Meadow timothy hay feast', category: 'Rabbits', kind: 'Nutrition', price: 549, old: 699, tag: 'ORGANIC', img: A.FOOD },
+            { name: 'Willow twig chew tunnel', category: 'Rabbits', kind: 'Play', price: 399, old: 499, tag: 'BUNNY PICK', img: A.RABBIT },
+            { name: 'Nano crystal aquarium starter', category: 'Fish', kind: 'Habitat', price: 2499, old: 2999, tag: 'STARTER KIT', img: A.FISH },
+            { name: 'Radiant glow reef flakes', category: 'Fish', kind: 'Nutrition', price: 349, old: 420, tag: 'VIBRANT COLOR', img: A.FOOD },
+            { name: 'Silent spinner running wheel', category: 'Small Pets', kind: 'Play', price: 699, old: 899, tag: 'WHISPER QUIET', img: A.HAMSTER },
+            { name: 'Cozy cloud burrow bedding', category: 'Small Pets', kind: 'Comfort', price: 449, old: 580, tag: 'DUST FREE', img: A.BED },
+            { name: 'Pasture harvest mineral lick', category: 'Farm Animals', kind: 'Nutrition', price: 899, old: 1099, tag: 'ESSENTIALS', img: A.FOOD },
+            { name: 'Gentle livestock groom brush', category: 'Farm Animals', kind: 'Care', price: 749, old: 950, tag: 'DURABLE', img: A.FARM },
+            { name: 'Good dog treat bites', category: 'Food', kind: 'Natural treats', price: 449, old: 549, tag: 'NATURAL', img: A.FOOD },
+            { name: 'Bouncy buddy ball', category: 'Toys', kind: 'Play', price: 299, old: 399, tag: 'PLAYTIME', img: A.TOY }
+        ]; let cart = [];
+        function render(filter = 'All') { let g = document.getElementById('productgrid'); g.innerHTML = ''; products.filter(p => filter === 'All' || p.category === filter).forEach((p, i) => { let idx = products.indexOf(p); g.innerHTML += `<article class="product"><div class="visual"><span class="tag">${p.tag}</span><img src="${p.img}" alt="${p.name}"><button class="add" aria-label="Add to cart" onclick="add(${idx})">+</button></div><div class="pinfo"><small>${p.kind} · ${p.category}</small><h3>${p.name}</h3><span class="price">₹${p.price.toLocaleString('en-IN')} <span class="old">₹${p.old.toLocaleString('en-IN')}</span></span></div></article>` }) }
+        function filterProducts(f, btn) { render(f); document.querySelectorAll('.filters .filter').forEach(b => { const matches = b === btn || (btn === undefined && ((f === 'All' && b.textContent.trim() === 'All') || (f === 'Fish' && b.textContent.includes('Fish')) || (b.textContent.trim() === f))); b.classList.toggle('active', matches) }) }
+        function add(i) { cart.push(products[i]); document.getElementById('count').textContent = cart.length; updateCart(); notify(products[i].name + ' added to basket') }
+        function updateCart() { let el = document.getElementById('draweritems'); el.innerHTML = cart.length ? cart.map((p, i) => `<div class="lineitem"><span>${p.name}<br><small style="color:#8b9287">₹${p.price.toLocaleString('en-IN')}</small></span><button class="x" style="font-size:18px" onclick="removeItem(${i})">×</button></div>`).join('') : '<p style="color:#899184;font-size:12px">Your basket is waiting for some love.</p>'; document.getElementById('subtotal').textContent = '₹' + cart.reduce((s, p) => s + p.price, 0).toLocaleString('en-IN') }
+        function removeItem(i) { cart.splice(i, 1); document.getElementById('count').textContent = cart.length; updateCart() }
+        function toggleCart() { document.getElementById('drawer').classList.toggle('open'); document.getElementById('drawerbg').classList.toggle('show') }
+        function notify(m) { let t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(window.tt); window.tt = setTimeout(() => t.classList.remove('show'), 2600) }
+        function openBooking(title) { document.getElementById('modalTitle').textContent = title; document.getElementById('modalbg').classList.add('show') }
+        function closeModal() { document.getElementById('modalbg').classList.remove('show') }
+        function submitBooking(e) { e.preventDefault(); closeModal(); e.target.reset(); notify('Request received in this demo. Thank you! 💚') }
+        render();
+    </script>
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+        const canvas = document.getElementById('pet3d');
+        try {
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(canvas.clientWidth, canvas.clientHeight, false); renderer.outputColorSpace = THREE.SRGBColorSpace;
+            const scene = new THREE.Scene(); const camera = new THREE.PerspectiveCamera(32, canvas.clientWidth / canvas.clientHeight, .1, 100); camera.position.set(0, 1.6, 8.5);
+            scene.add(new THREE.HemisphereLight(0xffffff, 0x9aab75, 2)); const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(4, 7, 6); scene.add(key); const rim = new THREE.PointLight(0xffe3b3, 35, 20); rim.position.set(-4, 3, 2); scene.add(rim);
+            const dog = new THREE.Group(); scene.add(dog);
+            const mat = (color, rough = .72) => new THREE.MeshStandardMaterial({ color, roughness: rough });
+            const fur = mat(0xc98d52), furLight = mat(0xe1ad70), earmat = mat(0x9b603b), cream = mat(0xf3e4c9), dark = mat(0x302923, .4), pink = mat(0x8d5650);
+            function ball(parent, x, y, z, sx, sy, sz, material) { let m = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 24), material); m.position.set(x, y, z); m.scale.set(sx, sy, sz); parent.add(m); return m }
+            ball(dog, 0, -.45, 0, 1.18, .9, .78, fur);
+            ball(dog, 0, .65, .12, .92, .95, .78, furLight);
+            ball(dog, -.72, 1.05, 0, .28, .72, .25, earmat).rotation.z = -.35;
+            ball(dog, .72, 1.05, 0, .28, .72, .25, earmat).rotation.z = .35;
+            ball(dog, 0, .25, .66, .53, .4, .23, cream);
+            ball(dog, -.33, .78, .77, .075, .09, .06, dark); ball(dog, .33, .78, .77, .075, .09, .06, dark);
+            ball(dog, 0, .48, .89, .12, .09, .08, dark);
+            ball(dog, -.68, -1.12, .05, .25, .42, .25, fur); ball(dog, .68, -1.12, .05, .25, .42, .25, fur);
+            ball(dog, -.2, -1.18, .05, .22, .35, .23, furLight); ball(dog, .2, -1.18, .05, .22, .35, .23, furLight);
+            const tail = new THREE.Group(); tail.position.set(1.02, -.45, -.15); dog.add(tail); ball(tail, .24, .25, 0, .22, .48, .22, fur).rotation.z = -.5;
+            const collar = new THREE.Mesh(new THREE.TorusGeometry(.47, .065, 12, 48), mat(0x8da64d)); collar.position.set(0, .03, .12); collar.rotation.x = Math.PI / 2; dog.add(collar);
+            const platform = new THREE.Mesh(new THREE.CylinderGeometry(1.55, 1.7, .13, 64), mat(0xf7f4e9)); platform.position.y = -1.55; scene.add(platform);
+            const shadow = new THREE.Mesh(new THREE.CircleGeometry(1.65, 64), new THREE.MeshBasicMaterial({ color: 0x7c8b54, transparent: true, opacity: .12 })); shadow.rotation.x = -Math.PI / 2; shadow.position.y = -1.47; scene.add(shadow);
+            dog.position.y = .15; dog.rotation.y = -.18;
+            let targetX = 0, targetY = 0; canvas.addEventListener('pointermove', e => { let r = canvas.getBoundingClientRect(); targetY = ((e.clientX - r.left) / r.width - .5) * .7; targetX = ((e.clientY - r.top) / r.height - .5) * .18 }); canvas.addEventListener('pointerleave', () => { targetX = 0; targetY = -.18 });
+            function resize() { let w = canvas.clientWidth, h = canvas.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix() } new ResizeObserver(resize).observe(canvas);
+            const clock = new THREE.Clock(); function animate() { requestAnimationFrame(animate); let t = clock.getElapsedTime(); dog.rotation.y += (targetY - dog.rotation.y) * .035; dog.rotation.x += (targetX - dog.rotation.x) * .035; dog.position.y = .15 + Math.sin(t * 1.5) * .07; tail.rotation.z = Math.sin(t * 3.4) * .35; renderer.render(scene, camera) } animate();
+        } catch (e) { canvas.style.display = 'none'; }
+    </script>
+
+    <!-- PetVerse Interactive Animated 3D Animal Showcase Module -->
+    <script type="module" id="petverse-category-showcase">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+        window.selectCategory = function(categoryName) {
+            if (typeof filterProducts === 'function') {
+                filterProducts(categoryName);
+            }
+            const shop = document.getElementById('shop');
+            if (shop) {
+                shop.scrollIntoView({ behavior: 'smooth' });
+            }
+            if (typeof notify === 'function') {
+                notify('Browsing ' + categoryName + ' collection 🐾');
+            }
+        };
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const createMat = (color, roughness = 0.68, metalness = 0.05, transparent = false, opacity = 1.0) => 
+            new THREE.MeshStandardMaterial({ color, roughness, metalness, transparent, opacity });
+
+        const addSphere = (parent, r, x, y, z, sx = 1, sy = 1, sz = 1, mat) => {
+            const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 28, 22), mat);
+            mesh.position.set(x, y, z);
+            mesh.scale.set(sx, sy, sz);
+            parent.add(mesh);
+            return mesh;
+        };
+
+        const addCylinder = (parent, rt, rb, h, x, y, z, mat, seg = 20) => {
+            const mesh = new THREE.Mesh(new THREE.CylinderGeometry(rt, rb, h, seg), mat);
+            mesh.position.set(x, y, z);
+            parent.add(mesh);
+            return mesh;
+        };
+
+        const addTorus = (parent, r, tube, x, y, z, mat) => {
+            const mesh = new THREE.Mesh(new THREE.TorusGeometry(r, tube, 12, 32), mat);
+            mesh.position.set(x, y, z);
+            parent.add(mesh);
+            return mesh;
+        };
+
+        const addCone = (parent, r, h, x, y, z, mat, seg = 18) => {
+            const mesh = new THREE.Mesh(new THREE.ConeGeometry(r, h, seg), mat);
+            mesh.position.set(x, y, z);
+            parent.add(mesh);
+            return mesh;
+        };
+
+        const addBox = (parent, w, h, d, x, y, z, mat) => {
+            const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+            mesh.position.set(x, y, z);
+            parent.add(mesh);
+            return mesh;
+        };
+
+        // 1. DOG
+        function buildDog(scene) {
+            const root = new THREE.Group(); scene.add(root); root.position.y = -0.2;
+            const mFur = createMat(0xd48a4c), mFurDark = createMat(0x9c5828), mCream = createMat(0xfbf3e6), mDark = createMat(0x22150d, 0.4), mPink = createMat(0xf08080), mCollar = createMat(0x7a9a3b), mGold = createMat(0xf5b041, 0.3, 0.7), mGrass = createMat(0x9eb86b);
+            addCylinder(scene, 1.6, 1.7, 0.1, 0, -1.25, 0, mGrass, 48);
+            const ballGroup = new THREE.Group(); ballGroup.position.set(1.05, -1.05, 0.65); scene.add(ballGroup);
+            addSphere(ballGroup, 0.18, 0, 0, 0, 1, 1, 1, createMat(0xd8f27a));
+            addTorus(ballGroup, 0.18, 0.02, 0, 0, 0, createMat(0xffffff));
+            addSphere(root, 0.76, 0, -0.35, 0, 1.05, 0.95, 0.88, mFur);
+            addSphere(root, 0.55, 0, -0.32, 0.42, 0.85, 0.9, 0.45, mCream);
+            const collar = addTorus(root, 0.46, 0.08, 0, 0.22, 0.1, mCollar);
+            collar.rotation.x = Math.PI / 2.3;
+            addSphere(root, 0.08, 0, 0.12, 0.54, 1, 1, 0.4, mGold);
+            const pawL = addSphere(root, 0.18, -0.32, -0.92, 0.45, 1, 0.75, 1.35, mCream);
+            const pawR = addSphere(root, 0.18, 0.32, -0.92, 0.45, 1, 0.75, 1.35, mCream);
+            addSphere(root, 0.32, -0.62, -0.75, 0.08, 1.15, 0.8, 1.1, mFur);
+            addSphere(root, 0.32, 0.62, -0.75, 0.08, 1.15, 0.8, 1.1, mFur);
+            const tailGroup = new THREE.Group(); tailGroup.position.set(0, -0.4, -0.55); root.add(tailGroup);
+            const tailMesh = addSphere(tailGroup, 0.14, 0, 0.3, -0.15, 0.85, 2.2, 0.85, mFur);
+            tailMesh.rotation.x = -0.55;
+            addSphere(tailMesh, 0.12, 0, 0.48, 0, 1, 1, 1, mCream);
+            const headGroup = new THREE.Group(); headGroup.position.set(0, 0.52, 0.12); root.add(headGroup);
+            addSphere(headGroup, 0.66, 0, 0, 0, 1.02, 0.96, 0.92, mFur);
+            addSphere(headGroup, 0.34, 0, -0.12, 0.45, 0.9, 0.72, 1.1, mCream);
+            addSphere(headGroup, 0.11, 0, -0.04, 0.76, 1.25, 0.85, 0.9, mDark);
+            const tongue = addSphere(headGroup, 0.12, 0, -0.26, 0.65, 0.85, 0.35, 1.4, mPink);
+            tongue.rotation.x = 0.3; tongue.visible = false;
+            const eyeL = addSphere(headGroup, 0.09, -0.25, 0.12, 0.54, 1, 1, 1, mDark);
+            const eyeR = addSphere(headGroup, 0.09, 0.25, 0.12, 0.54, 1, 1, 1, mDark);
+            addSphere(eyeL, 0.03, -0.02, 0.03, 0.07, 1, 1, 1, createMat(0xffffff));
+            addSphere(eyeR, 0.03, -0.02, 0.03, 0.07, 1, 1, 1, createMat(0xffffff));
+            const eyelidL = addSphere(headGroup, 0.1, -0.25, 0.12, 0.55, 1.05, 0.001, 1.05, mFur);
+            const eyelidR = addSphere(headGroup, 0.1, 0.25, 0.12, 0.55, 1.05, 0.001, 1.05, mFur);
+            const earLGroup = new THREE.Group(); earLGroup.position.set(-0.52, 0.32, 0.02); headGroup.add(earLGroup);
+            addSphere(earLGroup, 0.22, -0.12, -0.32, 0, 0.7, 1.8, 0.45, mFurDark); earLGroup.rotation.z = -0.3;
+            const earRGroup = new THREE.Group(); earRGroup.position.set(0.52, 0.32, 0.02); headGroup.add(earRGroup);
+            addSphere(earRGroup, 0.22, 0.12, -0.32, 0, 0.7, 1.8, 0.45, mFurDark); earRGroup.rotation.z = 0.3;
+            return {
+                update: (dt, t, isHovered, pointer, reducedMotion) => {
+                    const wagSpeed = isHovered ? 17 : 5.5;
+                    tailGroup.rotation.y = Math.sin(t * wagSpeed) * (isHovered ? 0.7 : 0.38);
+                    root.scale.y = 1 + Math.sin(t * 2) * 0.025;
+                    if (isHovered) {
+                        headGroup.rotation.y += (pointer.x * 0.6 - headGroup.rotation.y) * 0.1;
+                        headGroup.rotation.x += (-pointer.y * 0.3 - headGroup.rotation.x) * 0.1;
+                        headGroup.rotation.z = Math.sin(t * 3) * 0.18;
+                        root.position.y = -0.2 + (!reducedMotion ? Math.abs(Math.sin(t * 8)) * 0.16 : 0);
+                        tongue.visible = true;
+                        tongue.scale.z = 1.2 + Math.sin(t * 10) * 0.3;
+                        earLGroup.rotation.z = -0.15 + Math.sin(t * 8) * 0.1;
+                        earRGroup.rotation.z = 0.15 - Math.sin(t * 8) * 0.1;
+                    } else {
+                        headGroup.rotation.y += (Math.sin(t * 0.8) * 0.2 - headGroup.rotation.y) * 0.05;
+                        headGroup.rotation.x += (Math.sin(t * 1.6) * 0.08 - headGroup.rotation.x) * 0.05;
+                        headGroup.rotation.z = Math.sin(t * 1.4) * 0.22;
+                        root.position.y = -0.2 + Math.sin(t * 1.5) * 0.02;
+                        tongue.visible = false;
+                        earLGroup.rotation.z = -0.3 + Math.sin(t * 2) * 0.05;
+                        earRGroup.rotation.z = 0.3 - Math.sin(t * 2) * 0.05;
+                        const tapPhase = (t % 4.0);
+                        pawR.position.y = (tapPhase < 0.6) ? (-0.92 + Math.sin(tapPhase / 0.6 * Math.PI) * 0.18) : -0.92;
+                    }
+                    const blinkPhase = (t % 3.5);
+                    const bVal = (blinkPhase < 0.16) ? Math.max(0.001, Math.sin((blinkPhase / 0.16) * Math.PI) * 1.1) : 0.001;
+                    eyelidL.scale.y = bVal; eyelidR.scale.y = bVal;
+                }
+            };
+        }
+
+        // 2. CAT
+        function buildCat(scene) {
+            const root = new THREE.Group(); scene.add(root); root.position.y = -0.2;
+            const mCat = createMat(0xc49b7d), mChest = createMat(0xfaf3ec), mInnerEar = createMat(0xf8b4b4), mEye = createMat(0x2cb67d, 0.2, 0.1), mPupil = createMat(0x1a120c, 0.3), mNose = createMat(0xf06292), mMat = createMat(0xf0dfd5), mYarn = createMat(0xee6c4d, 0.8);
+            addCylinder(scene, 1.55, 1.65, 0.08, 0, -1.22, 0, mMat, 48);
+            addSphere(scene, 0.22, 1.05, -1.02, 0.6, 1, 1, 1, mYarn);
+            addTorus(scene, 0.22, 0.025, 1.05, -1.02, 0.6, createMat(0xd85637));
+            const yarnTail = addCylinder(scene, 0.02, 0.02, 0.5, 0.8, -1.16, 0.65, mYarn); yarnTail.rotation.z = Math.PI / 2.5;
+            const bodyGroup = new THREE.Group(); root.add(bodyGroup);
+            addSphere(bodyGroup, 0.68, 0, -0.38, 0, 0.95, 1.15, 0.92, mCat);
+            addSphere(bodyGroup, 0.52, 0, -0.32, 0.42, 0.78, 1.05, 0.45, mChest);
+            const pawL = addSphere(root, 0.14, -0.26, -0.96, 0.48, 1, 0.65, 1.4, mChest);
+            const pawRGroup = new THREE.Group(); pawRGroup.position.set(0.26, -0.85, 0.48); root.add(pawRGroup);
+            addSphere(pawRGroup, 0.14, 0, -0.11, 0, 1, 0.65, 1.4, mChest);
+            addSphere(root, 0.32, -0.56, -0.78, -0.05, 1.15, 0.9, 1.1, mCat);
+            addSphere(root, 0.32, 0.56, -0.78, -0.05, 1.15, 0.9, 1.1, mCat);
+            const tail1 = new THREE.Group(); tail1.position.set(0, -0.55, -0.55); root.add(tail1);
+            addCylinder(tail1, 0.09, 0.11, 0.4, 0, 0.18, 0, mCat);
+            const tail2 = new THREE.Group(); tail2.position.set(0, 0.36, 0); tail1.add(tail2);
+            addCylinder(tail2, 0.07, 0.09, 0.42, 0, 0.19, 0, mCat);
+            const tail3 = new THREE.Group(); tail3.position.set(0, 0.38, 0); tail2.add(tail3);
+            addCylinder(tail3, 0.05, 0.07, 0.4, 0, 0.18, 0, mCat);
+            addSphere(tail3, 0.06, 0, 0.38, 0, 1, 1.2, 1, mChest);
+            const headGroup = new THREE.Group(); headGroup.position.set(0, 0.55, 0.15); root.add(headGroup);
+            addSphere(headGroup, 0.58, 0, 0, 0, 1.05, 0.92, 0.95, mCat);
+            const earLGroup = new THREE.Group(); earLGroup.position.set(-0.35, 0.48, 0.05); headGroup.add(earLGroup);
+            const earL = addCone(earLGroup, 0.22, 0.42, 0, 0.16, 0, mCat); earL.scale.set(1, 1, 0.4); earLGroup.rotation.z = 0.25;
+            const innerL = addCone(earLGroup, 0.14, 0.3, 0, 0.14, 0.04, mInnerEar); innerL.scale.set(1, 1, 0.3);
+            const earRGroup = new THREE.Group(); earRGroup.position.set(0.35, 0.48, 0.05); headGroup.add(earRGroup);
+            const earR = addCone(earRGroup, 0.22, 0.42, 0, 0.16, 0, mCat); earR.scale.set(1, 1, 0.4); earRGroup.rotation.z = -0.25;
+            const innerR = addCone(earRGroup, 0.14, 0.3, 0, 0.14, 0.04, mInnerEar); innerR.scale.set(1, 1, 0.3);
+            const eyeL = addSphere(headGroup, 0.095, -0.22, 0.08, 0.48, 1, 1.15, 0.9, mEye);
+            const eyeR = addSphere(headGroup, 0.095, 0.22, 0.08, 0.48, 1, 1.15, 0.9, mEye);
+            addSphere(eyeL, 0.04, 0, 0, 0.07, 0.4, 1.1, 0.6, mPupil);
+            addSphere(eyeR, 0.04, 0, 0, 0.07, 0.4, 1.1, 0.6, mPupil);
+            addSphere(eyeL, 0.025, -0.03, 0.03, 0.08, 1, 1, 1, createMat(0xffffff));
+            addSphere(eyeR, 0.025, -0.03, 0.03, 0.08, 1, 1, 1, createMat(0xffffff));
+            const eyelidL = addSphere(headGroup, 0.105, -0.22, 0.08, 0.49, 1.05, 0.001, 1.05, mCat);
+            const eyelidR = addSphere(headGroup, 0.105, 0.22, 0.08, 0.49, 1.05, 0.001, 1.05, mCat);
+            addSphere(headGroup, 0.14, -0.09, -0.08, 0.48, 1, 0.8, 0.9, mChest);
+            addSphere(headGroup, 0.14, 0.09, -0.08, 0.48, 1, 0.8, 0.9, mChest);
+            addCone(headGroup, 0.06, 0.06, 0, -0.02, 0.54, mNose).rotation.x = Math.PI;
+            const jawGroup = new THREE.Group(); jawGroup.position.set(0, -0.15, 0.42); headGroup.add(jawGroup);
+            addSphere(jawGroup, 0.09, 0, -0.02, 0, 1, 0.6, 0.9, mChest);
+            addSphere(jawGroup, 0.06, 0, 0.02, 0.04, 0.8, 0.3, 1.2, createMat(0xf48fb1));
+            return {
+                update: (dt, t, isHovered, pointer, reducedMotion) => {
+                    const waveSpeed = isHovered ? 5.0 : 2.2;
+                    tail1.rotation.y = Math.sin(t * waveSpeed) * 0.35;
+                    tail1.rotation.z = Math.cos(t * waveSpeed * 0.5) * 0.2;
+                    tail2.rotation.y = Math.sin(t * waveSpeed - 0.7) * 0.45;
+                    tail3.rotation.z = Math.cos(t * waveSpeed) * 0.35;
+                    const twitch = Math.sin(t * 26);
+                    earRGroup.rotation.x = (twitch > 0.88) ? (twitch - 0.88) * 2.0 : 0;
+                    const cycle = (t % 7.5);
+                    if (cycle > 5.0 && cycle < 7.2 && !isHovered && !reducedMotion) {
+                        const prog = (cycle - 5.0) / 2.2;
+                        const curve = Math.sin(prog * Math.PI);
+                        bodyGroup.rotation.x = -curve * 0.28;
+                        bodyGroup.position.y = -curve * 0.12;
+                        headGroup.rotation.x = -curve * 0.35;
+                        headGroup.position.y = 0.55 - curve * 0.1;
+                        jawGroup.rotation.x = curve * 0.45;
+                        eyelidL.scale.y = Math.max(0.001, curve * 0.85);
+                        eyelidR.scale.y = Math.max(0.001, curve * 0.85);
+                        pawL.position.z = 0.48 + curve * 0.15;
+                    } else {
+                        bodyGroup.rotation.x = 0; bodyGroup.position.y = 0; jawGroup.rotation.x = 0; pawL.position.z = 0.48;
+                        if (isHovered) {
+                            headGroup.rotation.y += (pointer.x * 0.7 - headGroup.rotation.y) * 0.1;
+                            headGroup.rotation.x += (-pointer.y * 0.3 - headGroup.rotation.x) * 0.1;
+                            pawRGroup.rotation.x = Math.sin(t * 12) * 0.55;
+                            pawRGroup.position.y = -0.75 + Math.abs(Math.sin(t * 12)) * 0.12;
+                            earLGroup.rotation.z = 0.15; earRGroup.rotation.z = -0.15;
+                        } else {
+                            headGroup.rotation.y += (Math.sin(t * 1.0) * 0.15 - headGroup.rotation.y) * 0.05;
+                            headGroup.rotation.x += (Math.sin(t * 1.8) * 0.05 - headGroup.rotation.x) * 0.05;
+                            pawRGroup.rotation.x = 0; pawRGroup.position.y = -0.85;
+                            earLGroup.rotation.z = 0.25; earRGroup.rotation.z = -0.25;
+                        }
+                        const blink = (t % 4.2);
+                        const bVal = (blink < 0.25) ? Math.max(0.001, Math.sin((blink / 0.25) * Math.PI) * 1.05) : 0.001;
+                        eyelidL.scale.y = bVal; eyelidR.scale.y = bVal;
+                    }
+                }
+            };
+        }
+
+        // 3. BIRD
+        function buildBird(scene) {
+            const root = new THREE.Group(); scene.add(root); root.position.y = -0.2;
+            const mGreen = createMat(0x00b48a), mYellow = createMat(0xf9c74f), mBlue = createMat(0x118ab2), mBeak = createMat(0xf9844a, 0.4), mCheek = createMat(0xff758f), mWood = createMat(0x8d6e63, 0.85), mLeaf = createMat(0x43a047), mEye = createMat(0x1a1a1a, 0.3);
+            const perch = addCylinder(scene, 0.07, 0.08, 2.8, 0, -0.65, 0, mWood); perch.rotation.z = Math.PI / 2; perch.rotation.y = 0.15;
+            const leaf1 = addSphere(perch, 0.14, 0.12, 1.25, 0, 1.8, 0.5, 0.3, mLeaf); leaf1.rotation.z = 0.4;
+            const leaf2 = addSphere(perch, 0.14, -0.12, 1.2, 0, 1.8, 0.5, 0.3, mLeaf); leaf2.rotation.z = -0.4;
+            addCylinder(scene, 0.05, 0.05, 0.7, 0, -1.0, 0, mWood);
+            addCylinder(scene, 0.7, 0.75, 0.08, 0, -1.35, 0, createMat(0x4a3b32), 32);
+            const bird = new THREE.Group(); bird.position.set(0, -0.32, 0); root.add(bird);
+            addSphere(bird, 0.52, 0, 0.15, 0, 0.85, 1.2, 0.9, mGreen);
+            addSphere(bird, 0.42, 0, 0.12, 0.34, 0.78, 1.05, 0.5, mYellow);
+            const headGroup = new THREE.Group(); headGroup.position.set(0, 0.72, 0.1); bird.add(headGroup);
+            addSphere(headGroup, 0.38, 0, 0, 0, 1.0, 1.02, 1.0, mGreen);
+            const crest = addCone(headGroup, 0.12, 0.45, 0, 0.42, -0.05, mYellow); crest.rotation.x = -0.45;
+            const crest2 = addCone(headGroup, 0.09, 0.35, 0, 0.38, -0.12, mBlue); crest2.rotation.x = -0.7;
+            const beak = addCone(headGroup, 0.16, 0.35, 0, -0.08, 0.45, mBeak); beak.rotation.x = 1.35;
+            addSphere(headGroup, 0.08, -0.22, -0.08, 0.28, 1, 0.8, 0.5, mCheek);
+            addSphere(headGroup, 0.08, 0.22, -0.08, 0.28, 1, 0.8, 0.5, mCheek);
+            const eyeL = addSphere(headGroup, 0.07, -0.2, 0.1, 0.28, 1, 1, 1, mEye);
+            const eyeR = addSphere(headGroup, 0.07, 0.2, 0.1, 0.28, 1, 1, 1, mEye);
+            addSphere(eyeL, 0.02, 0, 0.02, 0.06, 1, 1, 1, createMat(0xffffff));
+            addSphere(eyeR, 0.02, 0, 0.02, 0.06, 1, 1, 1, createMat(0xffffff));
+            const eyelidL = addSphere(headGroup, 0.075, -0.2, 0.1, 0.29, 1.05, 0.001, 1.05, mGreen);
+            const eyelidR = addSphere(headGroup, 0.075, 0.2, 0.1, 0.29, 1.05, 0.001, 1.05, mGreen);
+            const wingLGroup = new THREE.Group(); wingLGroup.position.set(-0.42, 0.35, 0); bird.add(wingLGroup);
+            const wingL = addSphere(wingLGroup, 0.32, -0.08, -0.32, 0, 0.4, 1.4, 0.8, mBlue); wingL.rotation.z = 0.15;
+            const wingRGroup = new THREE.Group(); wingRGroup.position.set(0.42, 0.35, 0); bird.add(wingRGroup);
+            const wingR = addSphere(wingRGroup, 0.32, 0.08, -0.32, 0, 0.4, 1.4, 0.8, mBlue); wingR.rotation.z = -0.15;
+            const tail = addCylinder(bird, 0.04, 0.16, 1.1, 0, -0.65, -0.32, mBlue); tail.rotation.x = -0.45;
+            addCylinder(bird, 0.03, 0.03, 0.18, -0.18, -0.32, 0, createMat(0x607d8b)).rotation.x = Math.PI / 3;
+            addCylinder(bird, 0.03, 0.03, 0.18, 0.18, -0.32, 0, createMat(0x607d8b)).rotation.x = Math.PI / 3;
+            return {
+                update: (dt, t, isHovered, pointer, reducedMotion) => {
+                    tail.rotation.x = -0.45 + Math.sin(t * 3.5) * 0.12;
+                    const headSnap = Math.floor(t * 0.8) % 3;
+                    let targetRotY = (headSnap === 1) ? 0.45 : (headSnap === 2) ? -0.45 : 0;
+                    let targetRotZ = (headSnap === 1) ? 0.2 : (headSnap === 2) ? -0.2 : 0;
+                    if (isHovered) {
+                        headGroup.rotation.y += (pointer.x * 0.8 - headGroup.rotation.y) * 0.15;
+                        headGroup.rotation.x += (-pointer.y * 0.4 - headGroup.rotation.x) * 0.15;
+                        headGroup.rotation.z = Math.sin(t * 8) * 0.15;
+                        const flap = Math.sin(t * 22);
+                        wingLGroup.rotation.z = flap * 0.85; wingRGroup.rotation.z = -flap * 0.85;
+                        bird.position.y = -0.32 + (!reducedMotion ? Math.abs(Math.sin(t * 11)) * 0.18 : 0);
+                    } else {
+                        headGroup.rotation.y += (targetRotY - headGroup.rotation.y) * 0.15;
+                        headGroup.rotation.z += (targetRotZ - headGroup.rotation.z) * 0.15;
+                        headGroup.rotation.x += (Math.sin(t * 2) * 0.06 - headGroup.rotation.x) * 0.1;
+                        const hopCycle = (t % 4.2);
+                        if (hopCycle < 0.45 && !reducedMotion) {
+                            const hopProg = hopCycle / 0.45;
+                            const hopArc = Math.sin(hopProg * Math.PI);
+                            bird.position.y = -0.32 + hopArc * 0.28;
+                            wingLGroup.rotation.z = Math.sin(hopProg * Math.PI * 4) * 0.4;
+                            wingRGroup.rotation.z = -Math.sin(hopProg * Math.PI * 4) * 0.4;
+                            const dir = (Math.floor(t / 4.2) % 2 === 0) ? 0.35 : -0.35;
+                            bird.position.x = dir * (hopProg - 0.5) * 2;
+                        } else {
+                            bird.position.y = -0.32; wingLGroup.rotation.z = 0; wingRGroup.rotation.z = 0;
+                        }
+                    }
+                    const blink = (t % 3.0);
+                    const bVal = (blink < 0.12) ? Math.max(0.001, Math.sin((blink / 0.12) * Math.PI) * 1.1) : 0.001;
+                    eyelidL.scale.y = bVal; eyelidR.scale.y = bVal;
+                }
+            };
+        }
+
+        // 4. RABBIT
+        function buildRabbit(scene) {
+            const root = new THREE.Group(); scene.add(root); root.position.y = -0.2;
+            const mWhite = createMat(0xfcfaf7), mPink = createMat(0xffb7b2), mInnerEar = createMat(0xffd1dc), mEye = createMat(0x2b1810, 0.3), mMeadow = createMat(0xa5cb78), mOrange = createMat(0xff7043), mGreen = createMat(0x43a047);
+            addCylinder(scene, 1.55, 1.65, 0.08, 0, -1.22, 0, mMeadow, 48);
+            const carrotGroup = new THREE.Group(); carrotGroup.position.set(1.0, -1.1, 0.65); carrotGroup.rotation.z = Math.PI / 2.3; carrotGroup.rotation.y = 0.3; scene.add(carrotGroup);
+            addCone(carrotGroup, 0.12, 0.48, 0, 0.2, 0, mOrange); addSphere(carrotGroup, 0.08, 0, 0.44, 0, 0.4, 1.8, 0.4, mGreen);
+            const bunny = new THREE.Group(); root.add(bunny);
+            addSphere(bunny, 0.72, 0, -0.35, 0, 1.0, 1.05, 1.1, mWhite);
+            addSphere(bunny, 0.2, 0, -0.45, -0.72, 1, 1, 1, mWhite);
+            const headGroup = new THREE.Group(); headGroup.position.set(0, 0.48, 0.25); bunny.add(headGroup);
+            addSphere(headGroup, 0.54, 0, 0, 0, 1.05, 0.95, 1.0, mWhite);
+            addSphere(headGroup, 0.22, -0.18, -0.12, 0.32, 1, 0.85, 0.9, mWhite);
+            addSphere(headGroup, 0.22, 0.18, -0.12, 0.32, 1, 0.85, 0.9, mWhite);
+            const nose = addSphere(headGroup, 0.08, 0, -0.06, 0.55, 1.2, 0.8, 1.0, mPink);
+            const eyeL = addSphere(headGroup, 0.085, -0.26, 0.1, 0.36, 1, 1, 1, mEye);
+            const eyeR = addSphere(headGroup, 0.085, 0.26, 0.1, 0.36, 1, 1, 1, mEye);
+            addSphere(eyeL, 0.025, -0.02, 0.02, 0.07, 1, 1, 1, createMat(0xffffff));
+            addSphere(eyeR, 0.025, -0.02, 0.02, 0.07, 1, 1, 1, createMat(0xffffff));
+            const eyelidL = addSphere(headGroup, 0.09, -0.26, 0.1, 0.37, 1.05, 0.001, 1.05, mWhite);
+            const eyelidR = addSphere(headGroup, 0.09, 0.26, 0.1, 0.37, 1.05, 0.001, 1.05, mWhite);
+            const earLGroup = new THREE.Group(); earLGroup.position.set(-0.25, 0.45, -0.05); headGroup.add(earLGroup);
+            const earL = addCylinder(earLGroup, 0.07, 0.15, 1.1, 0, 0.52, 0, mWhite); earL.scale.set(1, 1, 0.35);
+            const innerEL = addCylinder(earLGroup, 0.05, 0.11, 0.9, 0, 0.48, 0.04, mInnerEar); innerEL.scale.set(1, 1, 0.25);
+            earLGroup.rotation.z = -0.2; earLGroup.rotation.x = -0.15;
+            const earRGroup = new THREE.Group(); earRGroup.position.set(0.25, 0.45, -0.05); headGroup.add(earRGroup);
+            const earR = addCylinder(earRGroup, 0.07, 0.15, 1.1, 0, 0.52, 0, mWhite); earR.scale.set(1, 1, 0.35);
+            const innerER = addCylinder(earRGroup, 0.05, 0.11, 0.9, 0, 0.48, 0.04, mInnerEar); innerER.scale.set(1, 1, 0.25);
+            earRGroup.rotation.z = 0.28; earRGroup.rotation.x = -0.25;
+            const pawLGroup = new THREE.Group(); pawLGroup.position.set(-0.22, -0.18, 0.45); bunny.add(pawLGroup);
+            addSphere(pawLGroup, 0.14, 0, -0.32, 0.12, 0.9, 1.4, 0.9, mWhite);
+            const pawRGroup = new THREE.Group(); pawRGroup.position.set(0.22, -0.18, 0.45); bunny.add(pawRGroup);
+            addSphere(pawRGroup, 0.14, 0, -0.32, 0.12, 0.9, 1.4, 0.9, mWhite);
+            addSphere(bunny, 0.22, -0.48, -0.85, 0.25, 0.85, 0.55, 1.55, mWhite);
+            addSphere(bunny, 0.22, 0.48, -0.85, 0.25, 0.85, 0.55, 1.55, mWhite);
+            return {
+                update: (dt, t, isHovered, pointer, reducedMotion) => {
+                    const twitch = 1 + Math.sin(t * 22) * 0.15;
+                    nose.scale.set(1.2 * twitch, 0.8 * twitch, 1.0 * twitch);
+                    earLGroup.rotation.z = -0.2 + Math.sin(t * 3) * 0.08;
+                    earRGroup.rotation.z = 0.28 + Math.cos(t * 3.5) * 0.08;
+                    if (isHovered) {
+                        headGroup.rotation.y += (pointer.x * 0.6 - headGroup.rotation.y) * 0.1;
+                        headGroup.rotation.x += (-pointer.y * 0.3 - headGroup.rotation.x) * 0.1;
+                        bunny.position.y = !reducedMotion ? Math.abs(Math.sin(t * 7.5)) * 0.35 : 0;
+                        bunny.rotation.y = Math.sin(t * 7.5) * 0.25;
+                        earLGroup.rotation.x = -0.15 - Math.abs(Math.sin(t * 7.5)) * 0.4;
+                        earRGroup.rotation.x = -0.25 - Math.abs(Math.sin(t * 7.5)) * 0.4;
+                        pawLGroup.rotation.x = 0.3; pawRGroup.rotation.x = 0.3;
+                    } else {
+                        bunny.rotation.y = 0;
+                        headGroup.rotation.y += (Math.sin(t * 1.2) * 0.15 - headGroup.rotation.y) * 0.05;
+                        headGroup.rotation.x += (Math.sin(t * 2.0) * 0.05 - headGroup.rotation.x) * 0.05;
+                        const groomCycle = (t % 6.5);
+                        if (groomCycle < 2.0 && !reducedMotion) {
+                            const g = Math.sin(groomCycle * Math.PI * 2.5);
+                            pawLGroup.position.y = -0.18 + 0.35; pawRGroup.position.y = -0.18 + 0.35;
+                            pawLGroup.rotation.x = 0.8 + g * 0.3; pawRGroup.rotation.x = 0.8 - g * 0.3;
+                            pawLGroup.rotation.z = 0.3; pawRGroup.rotation.z = -0.3;
+                            headGroup.rotation.x = -0.15 + g * 0.1; bunny.position.y = 0;
+                        } else if (groomCycle > 4.5 && groomCycle < 5.1 && !reducedMotion) {
+                            const hopProg = (groomCycle - 4.5) / 0.6;
+                            bunny.position.y = Math.sin(hopProg * Math.PI) * 0.18;
+                            pawLGroup.position.y = -0.18; pawRGroup.position.y = -0.18;
+                            pawLGroup.rotation.x = 0; pawRGroup.rotation.x = 0;
+                        } else {
+                            bunny.position.y = 0; pawLGroup.position.y = -0.18; pawRGroup.position.y = -0.18;
+                            pawLGroup.rotation.x = 0; pawRGroup.rotation.x = 0;
+                            pawLGroup.rotation.z = 0; pawRGroup.rotation.z = 0;
+                        }
+                    }
+                    const blink = (t % 3.8);
+                    const bVal = (blink < 0.14) ? Math.max(0.001, Math.sin((blink / 0.14) * Math.PI) * 1.1) : 0.001;
+                    eyelidL.scale.y = bVal; eyelidR.scale.y = bVal;
+                }
+            };
+        }
+
+        // 5. FISH
+        function buildFish(scene) {
+            const root = new THREE.Group(); scene.add(root); root.position.y = -0.1;
+            const mOrange = createMat(0xff6b35, 0.4), mWhite = createMat(0xfafafa, 0.4), mBlack = createMat(0x1a1a1a, 0.4), mFin = createMat(0xff9e79, 0.3, 0.05, true, 0.85), mEye = createMat(0x101010, 0.2), mSand = createMat(0xdfd3b8), mCoral = createMat(0xff7043, 0.6), mCyanFish = createMat(0x00b4d8);
+            addCylinder(scene, 1.55, 1.65, 0.08, 0, -1.22, 0, mSand, 48);
+            addSphere(scene, 0.16, 0.6, -1.16, 0.4, 1.4, 0.7, 1.1, createMat(0x90a4ae));
+            addSphere(scene, 0.12, 0.82, -1.18, 0.5, 1.2, 0.6, 1.0, createMat(0x78909c));
+            const coralGroup = new THREE.Group(); coralGroup.position.set(-0.9, -1.15, -0.2); scene.add(coralGroup);
+            addCylinder(coralGroup, 0.06, 0.08, 0.5, 0, 0.22, 0, mCoral);
+            addCylinder(coralGroup, 0.04, 0.05, 0.35, 0.12, 0.38, 0, mCoral).rotation.z = -0.5;
+            addCylinder(coralGroup, 0.04, 0.05, 0.35, -0.12, 0.38, 0, mCoral).rotation.z = 0.5;
+            const bubbles = [];
+            const bubbleMat = createMat(0xffffff, 0.1, 0.8, true, 0.45);
+            for (let i = 0; i < 20; i++) {
+                const r = 0.035 + Math.random() * 0.06;
+                const b = addSphere(scene, r, (Math.random() - 0.5) * 2.2, -1.2 + Math.random() * 2.4, (Math.random() - 0.5) * 1.5, 1, 1, 1, bubbleMat);
+                bubbles.push({ mesh: b, speed: 0.008 + Math.random() * 0.015, wobble: Math.random() * Math.PI * 2, baseX: b.position.x });
+            }
+            const fish = new THREE.Group(); root.add(fish);
+            addSphere(fish, 0.65, 0, 0, 0, 0.52, 0.88, 1.35, mOrange);
+            const stripe1 = addTorus(fish, 0.48, 0.07, 0, 0, 0.18, mWhite); stripe1.scale.set(0.55, 0.95, 1);
+            addTorus(fish, 0.48, 0.015, 0, 0, 0.25, mBlack).scale.set(0.55, 0.95, 1);
+            addTorus(fish, 0.48, 0.015, 0, 0, 0.11, mBlack).scale.set(0.55, 0.95, 1);
+            const stripe2 = addTorus(fish, 0.36, 0.06, 0, 0, -0.32, mWhite); stripe2.scale.set(0.48, 0.85, 1);
+            addTorus(fish, 0.36, 0.015, 0, 0, -0.26, mBlack).scale.set(0.48, 0.85, 1);
+            addTorus(fish, 0.36, 0.015, 0, 0, -0.38, mBlack).scale.set(0.48, 0.85, 1);
+            const tailGroup = new THREE.Group(); tailGroup.position.set(0, 0, -0.85); fish.add(tailGroup);
+            const caudalFin = addCone(tailGroup, 0.45, 0.65, 0, 0, -0.32, mFin); caudalFin.scale.set(0.08, 1.25, 0.9); caudalFin.rotation.x = -Math.PI / 2;
+            const dorsal = addCone(fish, 0.25, 0.75, 0, 0.65, -0.15, mFin); dorsal.scale.set(0.08, 1, 1.2); dorsal.rotation.x = -0.55;
+            const finL = addCone(fish, 0.2, 0.4, -0.32, -0.12, 0.15, mFin); finL.scale.set(0.06, 1, 0.8); finL.rotation.z = -1.1; finL.rotation.y = 0.4;
+            const finR = addCone(fish, 0.2, 0.4, 0.32, -0.12, 0.15, mFin); finR.scale.set(0.06, 1, 0.8); finR.rotation.z = 1.1; finR.rotation.y = -0.4;
+            const eyeL = addSphere(fish, 0.09, -0.28, 0.18, 0.55, 1, 1, 1, createMat(0xffffff));
+            const eyeR = addSphere(fish, 0.09, 0.28, 0.18, 0.55, 1, 1, 1, createMat(0xffffff));
+            addSphere(eyeL, 0.05, -0.04, 0, 0.05, 1, 1, 1, mEye); addSphere(eyeR, 0.05, 0.04, 0, 0.05, 1, 1, 1, mEye);
+            addSphere(eyeL, 0.02, -0.05, 0.02, 0.07, 1, 1, 1, createMat(0xffffff)); addSphere(eyeR, 0.02, 0.05, 0.02, 0.07, 1, 1, 1, createMat(0xffffff));
+            const buddyFish = new THREE.Group(); buddyFish.position.set(-0.9, 0.5, -0.4); buddyFish.scale.setScalar(0.45); root.add(buddyFish);
+            addSphere(buddyFish, 0.55, 0, 0, 0, 0.5, 0.8, 1.3, mCyanFish);
+            const bTail = addCone(buddyFish, 0.35, 0.5, 0, 0, -0.65, createMat(0x48cae4)); bTail.scale.set(0.08, 1.1, 0.9); bTail.rotation.x = -Math.PI / 2;
+            return {
+                update: (dt, t, isHovered, pointer, reducedMotion) => {
+                    for (let i = 0; i < bubbles.length; i++) {
+                        const b = bubbles[i];
+                        b.mesh.position.y += b.speed;
+                        b.wobble += dt * 3;
+                        b.mesh.position.x = b.baseX + Math.sin(b.wobble) * 0.04;
+                        if (b.mesh.position.y > 1.35) b.mesh.position.y = -1.2;
+                    }
+                    const tailSpeed = isHovered ? 16 : 7;
+                    const tailAmp = isHovered ? 0.65 : 0.45;
+                    tailGroup.rotation.y = Math.sin(t * tailSpeed) * tailAmp;
+                    bTail.rotation.y = Math.sin(t * tailSpeed + 1) * tailAmp;
+                    finL.rotation.y = 0.4 + Math.sin(t * tailSpeed * 1.5) * 0.35;
+                    finR.rotation.y = -0.4 - Math.sin(t * tailSpeed * 1.5) * 0.35;
+                    if (isHovered) {
+                        const targetX = pointer.x * 1.2; const targetY = pointer.y * 0.7;
+                        fish.position.x += (targetX - fish.position.x) * 0.08;
+                        fish.position.y += (targetY - fish.position.y) * 0.08;
+                        fish.position.z += (0.4 - fish.position.z) * 0.08;
+                        fish.rotation.y += (Math.sin(t * 8) * 0.4 - fish.rotation.y) * 0.1;
+                        fish.rotation.z = Math.sin(t * 10) * 0.3;
+                        fish.rotation.x = -pointer.y * 0.4;
+                    } else {
+                        fish.position.x = Math.sin(t * 1.4) * 0.65;
+                        fish.position.y = Math.cos(t * 2.0) * 0.22;
+                        fish.position.z = Math.sin(t * 0.9) * 0.3;
+                        fish.rotation.y = Math.cos(t * 1.4) * 0.45;
+                        fish.rotation.z = -Math.cos(t * 1.4) * 0.25;
+                        fish.rotation.x = -Math.sin(t * 2.0) * 0.15;
+                    }
+                    buddyFish.position.x = fish.position.x - 0.55 + Math.sin(t * 2) * 0.1;
+                    buddyFish.position.y = fish.position.y + 0.35 + Math.cos(t * 2.5) * 0.08;
+                    buddyFish.rotation.y = fish.rotation.y;
+                }
+            };
+        }
+
+        // 6. SMALL PET (Hamster)
+        function buildSmallPet(scene) {
+            const root = new THREE.Group(); scene.add(root); root.position.y = -0.2;
+            const mHoney = createMat(0xe09f58), mWhite = createMat(0xfff6eb), mPink = createMat(0xf48fb1), mEye = createMat(0x1a1a1a, 0.3), mStand = createMat(0x4db6ac, 0.5, 0.3), mWheel = createMat(0x80cbc4, 0.4, 0.1), mFloor = createMat(0xf4e2cb), mSeed = createMat(0x3e2723);
+            addCylinder(scene, 1.55, 1.65, 0.08, 0, -1.22, 0, mFloor, 48);
+            for (let i = 0; i < 4; i++) {
+                const seed = addSphere(scene, 0.07, 0.7 + i * 0.15, -1.18, 0.4 + (i % 2) * 0.2, 0.6, 0.4, 1.6, mSeed);
+                seed.rotation.y = i * 0.8;
+            }
+            const stand = new THREE.Group(); stand.position.set(0, -0.3, -0.1); scene.add(stand);
+            addCylinder(stand, 0.04, 0.04, 1.6, -0.85, -0.15, -0.4, mStand).rotation.z = -0.25;
+            addCylinder(stand, 0.04, 0.04, 1.6, 0.85, -0.15, -0.4, mStand).rotation.z = 0.25;
+            addCylinder(stand, 0.04, 0.04, 1.8, 0, -0.85, -0.4, mStand).rotation.z = Math.PI / 2;
+            const wheel = new THREE.Group(); wheel.position.set(0, -0.15, -0.1); scene.add(wheel);
+            const rim = addCylinder(wheel, 1.15, 1.15, 0.52, 0, 0, 0, mWheel, 32); rim.rotation.x = Math.PI / 2;
+            addCylinder(wheel, 0.08, 0.08, 0.65, 0, 0, 0, mStand, 16).rotation.x = Math.PI / 2;
+            for (let s = 0; s < 4; s++) {
+                const spoke = addCylinder(wheel, 0.025, 0.025, 2.2, 0, 0, -0.22, mWheel, 8);
+                spoke.rotation.z = (s * Math.PI) / 4;
+            }
+            const hamster = new THREE.Group(); hamster.position.set(0, -0.75, 0.02); root.add(hamster);
+            addSphere(hamster, 0.52, 0, 0, 0, 1.0, 0.88, 1.1, mHoney);
+            addSphere(hamster, 0.42, 0, -0.05, 0.18, 0.85, 0.75, 0.6, mWhite);
+            const headGroup = new THREE.Group(); headGroup.position.set(0, 0.22, 0.35); hamster.add(headGroup);
+            addSphere(headGroup, 0.38, 0, 0, 0, 1.15, 0.95, 0.95, mHoney);
+            addSphere(headGroup, 0.18, -0.18, -0.08, 0.18, 1, 0.8, 0.9, mWhite);
+            addSphere(headGroup, 0.18, 0.18, -0.08, 0.18, 1, 0.8, 0.9, mWhite);
+            const nose = addSphere(headGroup, 0.06, 0, -0.04, 0.38, 1.2, 0.8, 0.9, mPink);
+            const earL = addSphere(headGroup, 0.12, -0.25, 0.28, -0.05, 1, 1, 0.4, mHoney); addSphere(earL, 0.08, 0, 0, 0.04, 1, 1, 0.3, mPink);
+            const earR = addSphere(headGroup, 0.12, 0.25, 0.28, -0.05, 1, 1, 0.4, mHoney); addSphere(earR, 0.08, 0, 0, 0.04, 1, 1, 0.3, mPink);
+            const eyeL = addSphere(headGroup, 0.065, -0.22, 0.08, 0.24, 1, 1, 1, mEye);
+            const eyeR = addSphere(headGroup, 0.065, 0.22, 0.08, 0.24, 1, 1, 1, mEye);
+            addSphere(eyeL, 0.02, -0.02, 0.02, 0.05, 1, 1, 1, createMat(0xffffff));
+            addSphere(eyeR, 0.02, -0.02, 0.02, 0.05, 1, 1, 1, createMat(0xffffff));
+            const eyelidL = addSphere(headGroup, 0.07, -0.22, 0.08, 0.25, 1.05, 0.001, 1.05, mHoney);
+            const eyelidR = addSphere(headGroup, 0.07, 0.22, 0.08, 0.25, 1.05, 0.001, 1.05, mHoney);
+            const pawL = addSphere(hamster, 0.08, -0.16, -0.15, 0.48, 1, 0.7, 1.2, mPink);
+            const pawR = addSphere(hamster, 0.08, 0.16, -0.15, 0.48, 1, 0.7, 1.2, mPink);
+            const footL = addSphere(hamster, 0.1, -0.32, -0.28, -0.05, 0.8, 0.6, 1.4, mPink);
+            const footR = addSphere(hamster, 0.1, 0.32, -0.28, -0.05, 0.8, 0.6, 1.4, mPink);
+            return {
+                update: (dt, t, isHovered, pointer, reducedMotion) => {
+                    const snif = 1 + Math.sin(t * 24) * 0.14;
+                    nose.scale.set(1.2 * snif, 0.8 * snif, 0.9 * snif);
+                    if (isHovered) {
+                        wheel.rotation.z += dt * 0.5;
+                        hamster.position.y = -0.65;
+                        hamster.rotation.x = -0.45;
+                        headGroup.rotation.y += (pointer.x * 0.7 - headGroup.rotation.y) * 0.12;
+                        headGroup.rotation.x += (-pointer.y * 0.3 - headGroup.rotation.x) * 0.12;
+                        pawL.position.set(-0.12, 0.08, 0.45); pawR.position.set(0.12, 0.08, 0.45);
+                    } else {
+                        const cycle = (t % 6.0);
+                        if (cycle < 3.8 && !reducedMotion) {
+                            const runSpeed = 9.0;
+                            wheel.rotation.z -= dt * runSpeed;
+                            hamster.position.y = -0.75 + Math.abs(Math.sin(t * 16)) * 0.04;
+                            hamster.rotation.x = 0; headGroup.rotation.y = 0; headGroup.rotation.x = 0.15;
+                            pawL.position.y = -0.15 + Math.sin(t * 16) * 0.08;
+                            pawR.position.y = -0.15 - Math.sin(t * 16) * 0.08;
+                            footL.position.y = -0.28 - Math.sin(t * 16) * 0.08;
+                            footR.position.y = -0.28 + Math.sin(t * 16) * 0.08;
+                        } else {
+                            wheel.rotation.z -= dt * 0.4;
+                            hamster.position.y = -0.68; hamster.rotation.x = -0.38;
+                            headGroup.rotation.y = Math.sin(t * 3) * 0.25;
+                            pawL.position.set(-0.12, 0.06, 0.42); pawR.position.set(0.12, 0.06, 0.42);
+                        }
+                    }
+                    const blink = (t % 3.4);
+                    const bVal = (blink < 0.12) ? Math.max(0.001, Math.sin((blink / 0.12) * Math.PI) * 1.1) : 0.001;
+                    eyelidL.scale.y = bVal; eyelidR.scale.y = bVal;
+                }
+            };
+        }
+
+        // 7. FARM (Baby Cow & Chick)
+        function buildFarm(scene) {
+            const root = new THREE.Group(); scene.add(root); root.position.y = -0.2;
+            const mWhite = createMat(0xffffff), mBlack = createMat(0x222222, 0.6), mMuzzle = createMat(0xffcdd2), mHoof = createMat(0x424242), mRed = createMat(0xd32f2f), mBell = createMat(0xfbc02d, 0.3, 0.8), mFence = createMat(0x8d6e63, 0.85), mGrass = createMat(0x94b465), mChick = createMat(0xffee58), mOrange = createMat(0xfb8c00), mEye = createMat(0x1a1a1a, 0.3);
+            addCylinder(scene, 1.55, 1.65, 0.08, 0, -1.22, 0, mGrass, 48);
+            const fence = new THREE.Group(); fence.position.set(0, -0.65, -0.65); scene.add(fence);
+            addCylinder(fence, 0.06, 0.07, 1.1, -0.9, -0.15, 0, mFence);
+            addCylinder(fence, 0.06, 0.07, 1.1, 0.9, -0.15, 0, mFence);
+            addBox(fence, 2.2, 0.08, 0.05, 0, 0.22, 0, mFence);
+            addBox(fence, 2.2, 0.08, 0.05, 0, -0.18, 0, mFence);
+            const chick = new THREE.Group(); chick.position.set(0.65, -0.32, -0.65); scene.add(chick);
+            addSphere(chick, 0.16, 0, 0, 0, 1, 0.95, 1.05, mChick);
+            addCone(chick, 0.05, 0.1, 0, 0.02, 0.18, mOrange).rotation.x = Math.PI / 2;
+            addSphere(chick, 0.025, -0.06, 0.06, 0.12, 1, 1, 1, mEye);
+            addSphere(chick, 0.025, 0.06, 0.06, 0.12, 1, 1, 1, mEye);
+            const chickWingL = addSphere(chick, 0.08, -0.14, 0, 0, 0.3, 1, 0.8, mChick);
+            const chickWingR = addSphere(chick, 0.08, 0.14, 0, 0, 0.3, 1, 0.8, mChick);
+            const calf = new THREE.Group(); root.add(calf); calf.position.set(-0.1, -0.2, 0);
+            const body = addSphere(calf, 0.68, 0, -0.25, 0, 1.15, 0.95, 1.35, mWhite);
+            addSphere(body, 0.34, -0.42, 0.12, 0.15, 0.9, 1.0, 0.9, mBlack);
+            addSphere(body, 0.28, 0.38, -0.05, -0.25, 0.9, 0.9, 0.9, mBlack);
+            addSphere(body, 0.24, -0.25, -0.15, -0.45, 0.8, 0.8, 0.8, mBlack);
+            const makeLeg = (x, z) => {
+                const legGroup = new THREE.Group(); legGroup.position.set(x, -0.55, z); calf.add(legGroup);
+                addCylinder(legGroup, 0.12, 0.14, 0.65, 0, -0.18, 0, mWhite);
+                addCylinder(legGroup, 0.14, 0.15, 0.12, 0, -0.46, 0, mHoof);
+                return legGroup;
+            };
+            const legFL = makeLeg(-0.35, 0.42); const legFR = makeLeg(0.35, 0.42);
+            const legBL = makeLeg(-0.38, -0.42); const legBR = makeLeg(0.38, -0.42);
+            addTorus(calf, 0.44, 0.06, 0, 0.2, 0.38, mRed).rotation.x = Math.PI / 2.5;
+            const bell = addSphere(calf, 0.09, 0, 0.08, 0.72, 1, 1.2, 0.9, mBell);
+            const tailGroup = new THREE.Group(); tailGroup.position.set(0, -0.15, -0.75); calf.add(tailGroup);
+            const tailCyl = addCylinder(tailGroup, 0.04, 0.05, 0.65, 0, -0.28, 0, mWhite); tailCyl.rotation.x = -0.25;
+            addSphere(tailGroup, 0.1, 0, -0.58, -0.12, 0.8, 1.5, 0.8, mBlack);
+            const headGroup = new THREE.Group(); headGroup.position.set(0, 0.52, 0.42); calf.add(headGroup);
+            addSphere(headGroup, 0.52, 0, 0, 0, 1.05, 0.95, 1.02, mWhite);
+            addSphere(headGroup, 0.28, -0.22, 0.18, 0.12, 0.9, 0.9, 0.9, mBlack);
+            addCone(headGroup, 0.06, 0.12, -0.28, 0.42, 0.05, createMat(0xd7ccc8)).rotation.z = -0.3;
+            addCone(headGroup, 0.06, 0.12, 0.28, 0.42, 0.05, createMat(0xd7ccc8)).rotation.z = 0.3;
+            const earL = addSphere(headGroup, 0.16, -0.48, 0.18, 0, 1.4, 0.55, 0.5, mWhite); earL.rotation.z = 0.45;
+            const earR = addSphere(headGroup, 0.16, 0.48, 0.18, 0, 1.4, 0.55, 0.5, mBlack); earR.rotation.z = -0.45;
+            const muzzle = addSphere(headGroup, 0.32, 0, -0.14, 0.42, 1.15, 0.75, 0.9, mMuzzle);
+            addSphere(muzzle, 0.04, -0.14, 0.02, 0.28, 1, 1.3, 0.5, mBlack);
+            addSphere(muzzle, 0.04, 0.14, 0.02, 0.28, 1, 1.3, 0.5, mBlack);
+            const eyeL = addSphere(headGroup, 0.09, -0.26, 0.14, 0.38, 1, 1, 1, mEye);
+            const eyeR = addSphere(headGroup, 0.09, 0.26, 0.14, 0.38, 1, 1, 1, mEye);
+            addSphere(eyeL, 0.025, -0.02, 0.02, 0.07, 1, 1, 1, createMat(0xffffff));
+            addSphere(eyeR, 0.025, -0.02, 0.02, 0.07, 1, 1, 1, createMat(0xffffff));
+            const eyelidL = addSphere(headGroup, 0.095, -0.26, 0.14, 0.39, 1.05, 0.001, 1.05, mWhite);
+            const eyelidR = addSphere(headGroup, 0.095, 0.26, 0.14, 0.39, 1.05, 0.001, 1.05, mWhite);
+            return {
+                update: (dt, t, isHovered, pointer, reducedMotion) => {
+                    body.scale.x = 1.15 + Math.sin(t * 2) * 0.02;
+                    tailGroup.rotation.y = Math.sin(t * (isHovered ? 12 : 3.5)) * (isHovered ? 0.7 : 0.45);
+                    chick.position.y = -0.32 + Math.abs(Math.sin(t * 4)) * 0.06;
+                    chickWingL.rotation.z = Math.sin(t * 16) * 0.4;
+                    chickWingR.rotation.z = -Math.sin(t * 16) * 0.4;
+                    if (isHovered) {
+                        headGroup.rotation.y += (pointer.x * 0.6 - headGroup.rotation.y) * 0.12;
+                        headGroup.rotation.x += (-pointer.y * 0.3 - headGroup.rotation.x) * 0.12;
+                        calf.position.y = -0.2 + (!reducedMotion ? Math.abs(Math.sin(t * 7.5)) * 0.2 : 0);
+                        bell.rotation.z = Math.sin(t * 16) * 0.35;
+                        earL.rotation.z = 0.45 + Math.sin(t * 8) * 0.2;
+                        earR.rotation.z = -0.45 - Math.sin(t * 8) * 0.2;
+                        chickWingL.rotation.z = Math.sin(t * 24) * 0.8;
+                        chickWingR.rotation.z = -Math.sin(t * 24) * 0.8;
+                    } else {
+                        calf.position.y = -0.2;
+                        headGroup.rotation.y = Math.sin(t * 1.2) * 0.18;
+                        headGroup.rotation.x = Math.sin(t * 2.4) * 0.06;
+                        earL.rotation.z = 0.45 + Math.sin(t * 1.5) * 0.06;
+                        earR.rotation.z = -0.45 - Math.sin(t * 1.5) * 0.06;
+                        legFL.rotation.x = Math.sin(t * 3.5) * 0.2;
+                        legFR.rotation.x = -Math.sin(t * 3.5) * 0.2;
+                        legBL.rotation.x = -Math.sin(t * 3.5) * 0.15;
+                        legBR.rotation.x = Math.sin(t * 3.5) * 0.15;
+                    }
+                    const blink = (t % 4.0);
+                    const bVal = (blink < 0.14) ? Math.max(0.001, Math.sin((blink / 0.14) * Math.PI) * 1.1) : 0.001;
+                    eyelidL.scale.y = bVal; eyelidR.scale.y = bVal;
+                }
+            };
+        }
+
+        const BUILDERS = {
+            'canvas-dog': buildDog,
+            'canvas-cat': buildCat,
+            'canvas-bird': buildBird,
+            'canvas-rabbit': buildRabbit,
+            'canvas-fish': buildFish,
+            'canvas-smallpet': buildSmallPet,
+            'canvas-farm': buildFarm
+        };
+
+        const cardScenes = {};
+
+        function initCategoryShowcase() {
+            const cards = document.querySelectorAll('.anim-cat-card');
+            cards.forEach(cardEl => {
+                const catName = cardEl.dataset.category;
+                const canvas = cardEl.querySelector('.card-3d-canvas');
+                if (!canvas) return;
+
+                const builder = BUILDERS[canvas.id];
+                if (!builder) return;
+
+                try {
+                    const renderer = new THREE.WebGLRenderer({
+                        canvas,
+                        alpha: true,
+                        antialias: true,
+                        powerPreference: 'default'
+                    });
+                    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                    renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+                    renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+                    const scene = new THREE.Scene();
+                    const camera = new THREE.PerspectiveCamera(34, canvas.clientWidth / canvas.clientHeight, 0.1, 50);
+                    camera.position.set(0, 0.9, 5.2);
+                    camera.lookAt(0, -0.1, 0);
+
+                    const hemi = new THREE.HemisphereLight(0xffffff, 0x90a870, 1.9);
+                    scene.add(hemi);
+
+                    const key = new THREE.DirectionalLight(0xfffaf0, 2.3);
+                    key.position.set(4, 7, 5);
+                    scene.add(key);
+
+                    const rim = new THREE.DirectionalLight(0xfff0dc, 1.7);
+                    rim.position.set(-4, 3, -3);
+                    scene.add(rim);
+
+                    const animal = builder(scene);
+
+                    const state = {
+                        renderer,
+                        scene,
+                        camera,
+                        animal,
+                        canvas,
+                        cardEl,
+                        isVisible: true,
+                        isHovered: false,
+                        pointer: { x: 0, y: 0 }
+                    };
+
+                    cardScenes[canvas.id] = state;
+
+                    cardEl.addEventListener('pointerenter', () => {
+                        state.isHovered = true;
+                    });
+
+                    cardEl.addEventListener('pointermove', (e) => {
+                        state.isHovered = true;
+                        const rect = cardEl.getBoundingClientRect();
+                        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                        const ny = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+                        state.pointer.x = nx;
+                        state.pointer.y = ny;
+
+                        if (!prefersReducedMotion) {
+                            const tiltX = -ny * 7.0;
+                            const tiltY = nx * 7.0;
+                            cardEl.style.transform = `perspective(850px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-8px) scale3d(1.02, 1.02, 1.02)`;
+                        }
+                    });
+
+                    cardEl.addEventListener('pointerleave', () => {
+                        state.isHovered = false;
+                        state.pointer.x = 0;
+                        state.pointer.y = 0;
+                        cardEl.style.transform = '';
+                    });
+
+                    cardEl.addEventListener('click', () => {
+                        window.selectCategory(catName);
+                    });
+
+                    cardEl.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            window.selectCategory(catName);
+                        }
+                    });
+                } catch (err) {
+                    console.warn('Could not init 3D canvas for', canvas.id, err);
+                }
+            });
+
+            if ('IntersectionObserver' in window) {
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const canvas = entry.target.querySelector('.card-3d-canvas');
+                        if (canvas && cardScenes[canvas.id]) {
+                            cardScenes[canvas.id].isVisible = entry.isIntersecting;
+                        }
+                    });
+                }, { threshold: 0.05 });
+
+                cards.forEach(c => obs.observe(c));
+            }
+
+            if ('ResizeObserver' in window) {
+                const ro = new ResizeObserver((entries) => {
+                    entries.forEach(entry => {
+                        const canvas = entry.target;
+                        const item = cardScenes[canvas.id];
+                        if (item) {
+                            const w = canvas.clientWidth;
+                            const h = canvas.clientHeight;
+                            if (w && h) {
+                                item.renderer.setSize(w, h, false);
+                                item.camera.aspect = w / h;
+                                item.camera.updateProjectionMatrix();
+                            }
+                        }
+                    });
+                });
+                document.querySelectorAll('.card-3d-canvas').forEach(c => ro.observe(c));
+            }
+
+            const clock = new THREE.Clock();
+            function animateShowcase() {
+                requestAnimationFrame(animateShowcase);
+                if (document.hidden) return;
+
+                const dt = clock.getDelta();
+                const t = clock.getElapsedTime();
+
+                for (const id in cardScenes) {
+                    const item = cardScenes[id];
+                    if (item.isVisible) {
+                        item.animal.update(dt, t, item.isHovered, item.pointer, prefersReducedMotion);
+                        item.renderer.render(item.scene, item.camera);
+                    }
+                }
+            }
+            animateShowcase();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCategoryShowcase);
+        } else {
+            initCategoryShowcase();
+        }
+    </script>
+
+</body>
+
+</html>
